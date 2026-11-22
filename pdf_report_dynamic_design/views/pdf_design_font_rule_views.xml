@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <record id="view_pdf_design_font_rule_tree" model="ir.ui.view">
+        <field name="name">pdf.design.font.rule.tree</field>
+        <field name="model">pdf.design.font.rule</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="company_id" invisible="1" groups="!base.group_multi_company"/>
+                <field name="lang_id" options="{'no_create': True}"/>
+                <field name="document_type" placeholder="All documents"/>
+                <field name="font"/>
+                <field name="custom_font" required="font == 'custom'" readonly="font != 'custom'"/>
+                <field name="direction"/>
+                <field name="font_size"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pdf_design_font_rule" model="ir.actions.act_window">
+        <field name="name">Fonts per Language</field>
+        <field name="res_model">pdf.design.font.rule</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Choose a PDF font for each language</p>
+            <p>Without a rule, right-to-left languages such as Arabic use Tajawal and the others use the company font. A bundled multi-script font is always added as a fallback so no character is ever printed as an empty box.</p>
+        </field>
+    </record>
+</odoo>

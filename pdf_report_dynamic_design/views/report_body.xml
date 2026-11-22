@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grid of label/value panels (header & summary fields). Expects "dyn_rows". -->
+    <template id="dyn_field_rows">
+        <table t-if="dyn_rows" class="dyn-grid">
+            <tr t-foreach="dyn_rows" t-as="dyn_row">
+                <td t-foreach="dyn_row" t-as="item" style="width: 25%; padding-bottom: 6px;">
+                    <div t-if="item" class="dyn-panel">
+                        <div class="dyn-label" t-out="item['label']"/>
+                        <div class="dyn-value" t-out="item['value'] or ' '"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <!-- Lines table. -->
+    <template id="dyn_lines_table">
+        <t t-set="st" t-value="dyn['style']"/>
+        <table t-if="dyn['line_columns']" class="dyn-lines">
+            <thead>
+                <tr>
+                    <th t-if="st['line_numbers']" t-attf-style="width: 7mm; text-align: {{st['align_start']}};">#</th>
+                    <th t-foreach="dyn['line_columns']" t-as="col"
+                        t-attf-style="text-align: {{col['align']}};" t-out="col['label']"/>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="dyn['line_rows']" t-as="row">
+                    <tr t-if="row['type'] == 'line'" t-att-class="'dyn-odd' if row['odd'] else None">
+                        <td t-if="st['line_numbers']" class="dyn-muted" t-out="row['number']"/>
+                        <td t-foreach="row['cells']" t-as="cell"
+                            t-attf-style="text-align: {{cell['a']}};" t-out="cell['v']"/>
+                    </tr>
+                    <tr t-else="" t-att-class="'dyn-section' if row['type'] == 'section' else 'dyn-note'">
+                        <td t-att-colspan="dyn['line_colspan']" t-out="row['text']"/>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
+    <!-- Full dynamic body (body mode = dynamic). -->
+    <template id="dyn_document_body">
+        <t t-set="st" t-value="dyn['style']"/>
+        <div t-attf-class="page o_dyn_page {{st['scope']}}" t-att-dir="dyn['direction']">
+            <style t-out="dyn['css']"/>
+            <div class="dyn-titlebox">
+                <div class="dyn-title" t-out="dyn['title']"/>
+                <div class="dyn-docname" t-out="dyn['doc_name']"/>
+            </div>
+            <div class="dyn-bar"/>
+
+            <!-- From / To (Banner) -->
+            <t t-if="dyn['arrangement'] == 'fromto'">
+                <table t-if="dyn['header_fields']" class="dyn-strip">
+                    <tr t-foreach="dyn['strip_rows']" t-as="dyn_row">
+                        <td t-foreach="dyn_row" t-as="item" t-attf-style="width: {{dyn['strip_width']}};">
+                            <t t-if="item">
+                                <div class="dyn-strip-label" t-out="item['label']"/>
+                                <div t-out="item['value']"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+                <table class="dyn-plain dyn-fromto" style="width: 100%;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            <div class="dyn-section-head" t-out="dyn['company_label']"/>
+                            <div style="line-height: 1.35;" t-out="dyn['company_block']"/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            <t t-if="dyn['show_partner_block']">
+                                <div t-foreach="dyn['partners']" t-as="partner" style="margin-bottom: 6px;">
+                                    <div class="dyn-section-head" t-out="partner['label']"/>
+                                    <div style="line-height: 1.35;" t-out="partner['html']"/>
+                                </div>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+
+            <!-- Partner at the start, fields as "label : value" at the end -->
+            <table t-elif="dyn['arrangement'] == 'split'" class="dyn-plain" style="width: 100%; margin-bottom: 12px;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        <t t-if="dyn['show_partner_block']">
+                            <div t-foreach="dyn['partners']" t-as="partner" style="margin-bottom: 6px;">
+                                <div class="dyn-section-head" t-out="partner['label']"/>
+                                <div style="line-height: 1.35;" t-out="partner['html']"/>
+                            </div>
+                        </t>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        <table t-if="dyn['header_fields']" class="dyn-kv dyn-plain" style="width: 100%;">
+                            <tr t-foreach="dyn['header_fields']" t-as="item">
+                                <td class="dyn-kv-label" t-out="item['label']"/>
+                                <td class="dyn-kv-sep">:</td>
+                                <td class="dyn-kv-value" t-out="item['value']"/>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- Partner first, then a tinted strip of fields (Wave) -->
+            <t t-elif="dyn['arrangement'] == 'strip'">
+                <table t-if="dyn['show_partner_block'] and dyn['partners']" class="dyn-plain" style="width: 100%; margin-bottom: 8px;">
+                    <tr>
+                        <td t-foreach="dyn['partners']" t-as="partner" style="width: 50%; vertical-align: top;">
+                            <div class="dyn-section-head" t-out="partner['label']"/>
+                            <div style="line-height: 1.35;" t-out="partner['html']"/>
+                        </td>
+                        <td t-if="dyn['partners_single']" style="width: 50%;"/>
+                    </tr>
+                </table>
+                <table t-if="dyn['header_fields']" class="dyn-strip">
+                    <tr t-foreach="dyn['strip_rows']" t-as="dyn_row">
+                        <td t-foreach="dyn_row" t-as="item" t-attf-style="width: {{dyn['strip_width']}};"
+                            t-att-class="'dyn-strip-alt' if item_index % 2 == 1 else None">
+                            <t t-if="item">
+                                <div class="dyn-strip-label" t-out="item['label']"/>
+                                <div t-out="item['value']"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+
+            <!-- Panels (Modern, Minimal, Corporate, Elegant, Odoo layouts) -->
+            <t t-else="">
+                <table t-if="dyn['show_partner_block'] and dyn['partners']" class="dyn-grid">
+                    <tr>
+                        <td t-foreach="dyn['partners']" t-as="partner" style="width: 50%;">
+                            <div class="dyn-panel">
+                                <div class="dyn-label" t-out="partner['label']"/>
+                                <div class="dyn-value" style="line-height: 1.35;" t-out="partner['html']"/>
+                            </div>
+                        </td>
+                        <td t-if="dyn['partners_single']" style="width: 50%;"/>
+                    </tr>
+                </table>
+                <t t-call="pdf_report_dynamic_design.dyn_field_rows">
+                    <t t-set="dyn_rows" t-value="dyn['header_rows']"/>
+                </t>
+            </t>
+
+            <div class="dyn-bar-lines"/>
+            <t t-call="pdf_report_dynamic_design.dyn_lines_table"/>
+
+            <table class="dyn-plain" style="width: 100%; border-collapse: collapse; page-break-inside: avoid;">
+                <tr>
+                    <td t-attf-style="width: 55%; vertical-align: top; padding-{{st['align_end']}}: 6mm;">
+                        <div t-if="dyn['summary_fields']" class="dyn-panel" style="margin-bottom: 8px;">
+                            <table class="dyn-plain" style="width: 100%;">
+                                <tr t-foreach="dyn['summary_fields']" t-as="item">
+                                    <td class="dyn-label" style="width: 40%; padding: 2px 0; vertical-align: top;" t-out="item['label']"/>
+                                    <td class="dyn-value" style="padding: 2px 0;" t-out="item['value']"/>
+                                </tr>
+                            </table>
+                        </div>
+                        <div t-if="dyn['show_notes'] and dyn['notes']" style="font-size: 0.9em;" t-out="dyn['notes']"/>
+                        <!-- Invoices: blocks of Odoo's body the dynamic body must keep. -->
+                        <div t-if="dyn.get('payment_ref')" class="dyn-payment-ref" style="margin-top: 6px;">
+                            <span class="dyn-label">Payment Communication:</span>
+                            <strong t-out="dyn['payment_ref']"/>
+                        </div>
+                        <div t-if="dyn.get('payment_terms')" style="font-size: 0.9em; margin-top: 4px;" t-out="dyn['payment_terms']"/>
+                        <table t-if="dyn.get('qr_codes')" class="dyn-plain dyn-qr" style="margin-top: 8px; page-break-inside: avoid;">
+                            <tr>
+                                <td t-foreach="dyn['qr_codes']" t-as="qr"
+                                    t-attf-style="vertical-align: top; text-align: center; padding-{{st['align_end']}}: 6mm;">
+                                    <img t-att-src="qr['src']" t-att-alt="qr['caption']"
+                                         t-att-class="'dyn-qr-' + qr['kind']"
+                                         style="width: 30mm; height: 30mm; display: block; margin: 0 auto;"/>
+                                    <div style="font-size: 0.75em; margin-top: 1mm; max-width: 36mm;" t-out="qr['caption']"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 45%; vertical-align: top;">
+                        <table t-if="dyn['show_totals'] and dyn['totals']" class="dyn-totals">
+                            <tr t-foreach="dyn['totals']" t-as="total"
+                                t-att-class="'dyn-strong' if total['strong'] else None">
+                                <td t-out="total['label']"/>
+                                <td t-attf-style="text-align: {{st['align_end']}}; white-space: nowrap;" t-out="total['value']"/>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table t-if="dyn['show_signature']" class="dyn-plain" style="width: 100%; margin-top: 16mm; page-break-inside: avoid;">
+                <tr>
+                    <td style="width: 30%;"><div class="dyn-sign">Prepared By</div></td>
+                    <td style="width: 5%;"/>
+                    <td style="width: 30%;"><div class="dyn-sign">Approved By</div></td>
+                    <td style="width: 5%;"/>
+                    <td style="width: 30%;"><div class="dyn-sign">Received By</div></td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <!-- Body mode = standard: extra blocks around the Odoo body. -->
+    <template id="dyn_standard_top">
+        <div t-if="dyn.get('header_fields')" t-attf-class="o_dyn_extra {{dyn['style']['scope']}}"
+             t-att-dir="dyn['direction']" style="margin-bottom: 8px;">
+            <style t-out="dyn['css']"/>
+            <t t-call="pdf_report_dynamic_design.dyn_field_rows">
+                <t t-set="dyn_rows" t-value="dyn['header_rows']"/>
+            </t>
+        </div>
+    </template>
+
+    <template id="dyn_standard_bottom">
+        <div t-if="dyn.get('summary_fields') or dyn.get('line_columns')"
+             t-attf-class="o_dyn_extra {{dyn['style']['scope']}}" t-att-dir="dyn['direction']"
+             style="margin-top: 10px;">
+            <style t-out="dyn['css']"/>
+            <t t-call="pdf_report_dynamic_design.dyn_field_rows">
+                <t t-set="dyn_rows" t-value="dyn['summary_rows']"/>
+            </t>
+            <t t-if="dyn.get('line_columns')">
+                <div class="dyn-label" style="font-size: 1em; margin: 6px 0 4px 0;">Line Details</div>
+                <t t-call="pdf_report_dynamic_design.dyn_lines_table"/>
+            </t>
+        </div>
+    </template>
+</odoo>

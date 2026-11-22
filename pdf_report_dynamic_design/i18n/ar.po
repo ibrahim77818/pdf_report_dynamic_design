@@ -1,0 +1,1434 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pdf_report_dynamic_design
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 20.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 21:13+0000\n"
+"PO-Revision-Date: 2026-11-21 21:13+0000\n"
+"Last-Translator: Ibrahim Yahia\n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be a hexadecimal color such as #1F6FEB (current value: %(value)s)."
+msgstr "يجب أن يكون %(field)s لونًا سداسي عشريًا مثل #1F6FEB (القيمة الحالية: %(value)s)."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be between %(min)s and %(max)s mm (current value: %(value)s)."
+msgstr "يجب أن تكون قيمة %(field)s بين %(min)s و %(max)s مم (القيمة الحالية: %(value)s)."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be between %(min)s and %(max)s pt (current value: %(value)s)."
+msgstr "يجب أن تكون قيمة %(field)s بين %(min)s و %(max)s نقطة (القيمة الحالية: %(value)s)."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__accent_color
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Accent Color"
+msgstr "اللون الثانوي"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Account"
+msgstr "الحساب"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Add Rules for Active Languages"
+msgstr "إضافة قواعد للغات المفعّلة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__align
+msgid "Align"
+msgstr "المحاذاة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_align
+msgid "Alignment"
+msgstr "المحاذاة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_align__end
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_header_align__end
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_header_align__end
+msgid "All at end"
+msgstr "الكل في النهاية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_align__start
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_header_align__start
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_header_align__start
+msgid "All at start"
+msgstr "الكل في البداية"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_font_rule_tree
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "All documents"
+msgstr "جميع المستندات"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__field_ids
+msgid "All Fields"
+msgstr "جميع الحقول"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__amiri
+msgid "Amiri (server font)"
+msgstr "أميري (خط على الخادم)"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Amount Due"
+msgstr "المبلغ المستحق"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_field__field_id
+msgid "Any stored or computed field of the document - custom fields (x_...) included."
+msgstr "أي حقل مخزّن أو محسوب في المستند - بما في ذلك الحقول المخصصة (x_...)."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Applies to the Dynamic layouts. Page margins are computed from the heights, so the header and footer never overlap the body."
+msgstr "ينطبق على التخطيطات الديناميكية. تُحسب هوامش الصفحة من الارتفاعات، فلا تتداخل الترويسة والتذييل مع محتوى المستند أبداً."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_document_body
+msgid "Approved By"
+msgstr "اعتمده"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_search
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Archived"
+msgstr "مؤرشف"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_auto_margins
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_auto_margins
+msgid "Auto Page Margins"
+msgstr "هوامش صفحة تلقائية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__align__auto
+msgid "Automatic"
+msgstr "تلقائي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__direction__auto
+msgid "Automatic (from language)"
+msgstr "تلقائي (حسب اللغة)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_surface_color
+msgid "Background of table headers, totals and information panels."
+msgstr "خلفية رؤوس الجداول والإجماليات ولوحات المعلومات."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_base_font_size
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_base_font_size
+msgid "Base Font Size (pt)"
+msgstr "حجم الخط الأساسي (نقطة)"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Blocks"
+msgstr "الأقسام"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Body Blocks"
+msgstr "أقسام المحتوى"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__body_mode
+msgid "Body Mode"
+msgstr "نمط المحتوى"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__bold
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__bold
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__bold
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__bold
+msgid "Bold"
+msgstr "عريض"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__border_color
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_border_color
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_border_color
+msgid "Border Color"
+msgstr "لون الحدود"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__boxed
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__boxed
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__boxed
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__boxed
+msgid "Boxed"
+msgstr "مؤطر"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__bubble
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__bubble
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__bubble
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__bubble
+msgid "Bubble"
+msgstr "فقاعات"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__cairo
+msgid "Cairo (server font)"
+msgstr "القاهرة (خط على الخادم)"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#, python-format
+msgid "Cancelled %s"
+msgstr "%s ملغاة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__align__center
+msgid "Center"
+msgstr "الوسط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_align__center
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_header_align__center
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_header_align__center
+msgid "Centered"
+msgstr "في المنتصف"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__charcoal_orange
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__charcoal_orange
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__charcoal_orange
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__charcoal_orange
+msgid "Charcoal & Orange"
+msgstr "فحمي وبرتقالي"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:pdf_report_dynamic_design.action_pdf_design_font_rule
+msgid "Choose a PDF font for each language"
+msgstr "اختر خط PDF لكل لغة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_border_color
+msgid "Color of table borders and separators."
+msgstr "لون حدود الجداول والفواصل."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_palette
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_palette
+msgid "Color Palette"
+msgstr "لوحة الألوان"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__color_mode
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Colors"
+msgstr "الألوان"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__column
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__column
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__column
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__column
+msgid "Column"
+msgstr "أعمدة"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Columns of the lines table, in order. Custom line fields (x_...) are listed too."
+msgstr "أعمدة جدول البنود بالترتيب. تظهر أيضاً الحقول المخصصة للبنود (x_...)."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__density__comfortable
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_density__comfortable
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_density__comfortable
+msgid "Comfortable"
+msgstr "مريح"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__density__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_density__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_density__compact
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__compact
+msgid "Compact"
+msgstr "مضغوط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__company_id
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__company_id
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_search
+msgid "Company"
+msgstr "الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__color_mode__company
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_mode__company
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__footer_mode__company
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__density__company
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__company
+msgid "Company Default"
+msgstr "افتراضي الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_show_details
+msgid "Company Details"
+msgstr "بيانات الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__footer_show_details
+msgid "Company Footer Text"
+msgstr "نص تذييل الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Company layout"
+msgstr "تخطيط الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_auto_margins
+msgid "Compute the top and bottom page margins from the header and footer heights (dynamic layouts only). Disable to keep the paper format margins."
+msgstr "حساب الهامشين العلوي والسفلي من ارتفاع الترويسة والتذييل (للتخطيطات الديناميكية فقط). عطّله للإبقاء على هوامش تنسيق الورق."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Contact"
+msgstr "جهة الاتصال"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:pdf_report_dynamic_design.action_pdf_design_profile
+msgid "Create a design for a document type"
+msgstr "أنشئ تصميماً لنوع مستند"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Credit"
+msgstr "دائن"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__crimson
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__crimson
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__crimson
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__crimson
+msgid "Crimson"
+msgstr "قرمزي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__custom
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__custom
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__custom
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__custom
+msgid "Custom"
+msgstr "مخصص"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__custom_font
+msgid "Custom Font Name"
+msgstr "اسم الخط المخصص"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__color_mode__custom
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_mode__custom
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__footer_mode__custom
+msgid "Custom for this Document"
+msgstr "مخصص لهذا المستند"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__custom
+msgid "Custom server font"
+msgstr "خط مخصص على الخادم"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Customer"
+msgstr "العميل"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Debit"
+msgstr "مدين"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Default title"
+msgstr "العنوان الافتراضي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__dynfallback
+msgid "DejaVu Sans (bundled, multi-script)"
+msgstr "DejaVu Sans (مضمّن، متعدد اللغات)"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Delivery Address"
+msgstr "عنوان التسليم"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Delivery Slip"
+msgstr "إيصال التسليم"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__density
+msgid "Density"
+msgstr "الكثافة"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Description"
+msgstr "الوصف"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__desert
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__desert
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__desert
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__desert
+msgid "Desert Sand"
+msgstr "رمال الصحراء"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Design"
+msgstr "التصميم"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__direction
+msgid "Direction"
+msgstr "الاتجاه"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Document"
+msgstr "المستند"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.ui.menu,name:pdf_report_dynamic_design.menu_pdf_design_profile
+msgid "Document Designs"
+msgstr "تصاميم المستندات"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__model_name
+msgid "Document Model"
+msgstr "نموذج المستند"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_profile__title
+msgid "Document title. Leave empty for the default title."
+msgstr "عنوان المستند. اتركه فارغاً لاستخدام العنوان الافتراضي."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__document_type
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_search
+msgid "Document Type"
+msgstr "نوع المستند"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#, python-format
+msgid "Draft %s"
+msgstr "%s مسودة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__body_mode__dynamic
+msgid "Dynamic body (designed by this module)"
+msgstr "محتوى ديناميكي (مصمم بهذا التطبيق)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_profile__body_mode
+msgid ""
+"Dynamic: the whole document body is rendered from the fields selected below.\n"
+"Standard: Odoo keeps its own body; the selected header/summary fields are added and line fields are printed in a \"Line Details\" table."
+msgstr ""
+"ديناميكي: يُنشأ محتوى المستند بالكامل من الحقول المختارة أدناه.\n"
+"قياسي: يحتفظ أودو بمحتواه الأصلي؛ وتُضاف حقول الترويسة/الملخص المختارة، وتُطبع حقول البنود في جدول \"تفاصيل البنود\"."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "E-invoice QR code (ZATCA)"
+msgstr "رمز QR للفاتورة الإلكترونية (هيئة الزكاة والضريبة والجمارك)"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "e.g. Quotation - Arabic"
+msgstr "مثال: عرض سعر - عربي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__emerald
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__emerald
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__emerald
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__emerald
+msgid "Emerald"
+msgstr "زمردي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__align__end
+msgid "End"
+msgstr "النهاية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_font_rule__custom_font
+msgid "Exact family name of a font installed on the Odoo server."
+msgstr "الاسم الدقيق لعائلة خط مثبّت على خادم أودو."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_profile__footer_text
+msgid "Extra text printed in the footer of this document."
+msgstr "نص إضافي يُطبع في تذييل هذا المستند."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__field_id
+msgid "Field"
+msgstr "الحقل"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_field.py:0
+#, python-format
+msgid "Field \"%(field)s\" does not belong to %(model)s."
+msgstr "الحقل \"%(field)s\" لا ينتمي إلى %(model)s."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_field.py:0
+#, python-format
+msgid "Fields of type \"%s\" cannot be printed."
+msgstr "لا يمكن طباعة الحقول من نوع \"%s\"."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__font
+msgid "Font"
+msgstr "الخط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__font_size
+msgid "Font Size (pt)"
+msgstr "حجم الخط (نقطة)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_font_rule_ids
+#: model:ir.ui.menu,name:pdf_report_dynamic_design.menu_pdf_design_font_rule
+#: model:ir.actions.act_window,name:pdf_report_dynamic_design.action_pdf_design_font_rule
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Fonts per Language"
+msgstr "الخطوط حسب اللغة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__footer_mode
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Footer"
+msgstr "التذييل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_footer_height
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_footer_height
+msgid "Footer Height (mm)"
+msgstr "ارتفاع التذييل (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__footer_text
+msgid "Footer Text"
+msgstr "نص التذييل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_footer_show_details
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_footer_show_details
+msgid "Footer: Footer Text"
+msgstr "التذييل: نص التذييل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_footer_show_page_number
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_footer_show_page_number
+msgid "Footer: Page Numbers"
+msgstr "التذييل: أرقام الصفحات"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_footer_thanks
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_footer_thanks
+msgid "Footer: Thank-you Line"
+msgstr "التذييل: سطر الشكر"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "From"
+msgstr "من"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_header_spacing
+msgid "Gap between the header and the first line of the body."
+msgstr "المسافة بين الترويسة وأول سطر في المحتوى."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__graphite
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__graphite
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__graphite
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__graphite
+msgid "Graphite"
+msgstr "جرافيت"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_mode
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Header"
+msgstr "الترويسة"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Header & Footer"
+msgstr "الترويسة والتذييل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_align
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_align
+msgid "Header Alignment"
+msgstr "محاذاة الترويسة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_field_ids
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Header Fields"
+msgstr "حقول الترويسة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_height
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_height
+msgid "Header Height (mm)"
+msgstr "ارتفاع الترويسة (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__section__header
+msgid "Header Information"
+msgstr "معلومات الترويسة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_spacing
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_spacing
+msgid "Header Spacing (mm)"
+msgstr "تباعد الترويسة (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_field__show_if_empty
+msgid "Header/summary only: print the label even if the value is empty."
+msgstr "للترويسة/الملخص فقط: اطبع التسمية حتى لو كانت القيمة فارغة."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_show_details
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_show_details
+msgid "Header: Company Details"
+msgstr "الترويسة: بيانات الشركة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_show_logo
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_show_logo
+msgid "Header: Logo"
+msgstr "الترويسة: الشعار"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_header_show_tagline
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_header_show_tagline
+msgid "Header: Tagline"
+msgstr "الترويسة: الشعار النصي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_height
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__footer_height
+msgid "Height (mm)"
+msgstr "الارتفاع (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_footer_height
+msgid "Height reserved for the footer. The bottom page margin is computed from it."
+msgstr "الارتفاع المخصص للتذييل. يُحسب منه الهامش السفلي للصفحة."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_header_height
+msgid "Height reserved for the header. The top page margin is computed from it, so the header never overlaps the document body."
+msgstr "الارتفاع المخصص للترويسة. يُحسب منه الهامش العلوي للصفحة، فلا تتداخل الترويسة مع محتوى المستند أبداً."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_report_layout__dyn_hidden
+msgid "Hidden in Layout Picker"
+msgstr "مخفي في منتقي التخطيط"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Information panels printed above the lines (dates, references, salesperson, custom fields...)."
+msgstr "لوحات معلومات تُطبع فوق البنود (التواريخ، المراجع، مندوب المبيعات، الحقول المخصصة...)."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Invoice"
+msgstr "فاتورة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__account_invoice
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__account_invoice
+msgid "Invoice / Bill"
+msgstr "فاتورة عميل / فاتورة مورد"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Journal"
+msgstr "اليومية"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__journal_entry
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__journal_entry
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Journal Entry"
+msgstr "قيد يومية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.actions.report,name:pdf_report_dynamic_design.action_report_journal_entry
+msgid "Journal Entry (PDF)"
+msgstr "قيد يومية (PDF)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_report_layout__dyn_hidden
+msgid "Kept for companies already using it, but not offered in Configure Document Layout."
+msgstr "يُحتفظ به للشركات التي تستخدمه، لكنه لا يُعرض في تهيئة تخطيط المستند."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__label
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Label"
+msgstr "التسمية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__lang_id
+msgid "Language"
+msgstr "اللغة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__lato
+msgid "Lato"
+msgstr "Lato"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__report_layout_id
+msgid "Layout"
+msgstr "التخطيط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__auto
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__auto
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__auto
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__auto
+msgid "Layout Default"
+msgstr "افتراضي التخطيط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_font_rule__font_size
+msgid "Leave 0 to use the company size."
+msgstr "اتركه 0 لاستخدام حجم الشركة."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_font_rule__document_type
+msgid "Leave empty to apply the rule to every document type."
+msgstr "اتركه فارغاً لتطبيق القاعدة على جميع أنواع المستندات."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_field__label
+msgid "Leave empty to use the field label."
+msgstr "اتركه فارغاً لاستخدام تسمية الحقل."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_profile__report_layout_id
+msgid "Leave empty to use the layout chosen in \"Configure Document Layout\"."
+msgstr "اتركه فارغاً لاستخدام التخطيط المحدد في \"تهيئة تخطيط المستند\"."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__direction__ltr
+msgid "Left to Right"
+msgstr "من اليسار إلى اليمين"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__light
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__light
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__light
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__light
+msgid "Light"
+msgstr "خفيف"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__section__line
+msgid "Line Column"
+msgstr "عمود بند"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__line_field_ids
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Line Columns"
+msgstr "أعمدة البنود"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_standard_bottom
+msgid "Line Details"
+msgstr "تفاصيل البنود"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__line_model_name
+msgid "Line Model"
+msgstr "نموذج البنود"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_show_line_numbers
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_show_line_numbers
+msgid "Line Numbers"
+msgstr "ترقيم البنود"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "Lines Table"
+msgstr "جدول البنود"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_show_logo
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_header_content
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_logo_block
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.external_layout_dyn_v20_compact
+msgid "Logo"
+msgstr "الشعار"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__header_align__split
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_header_align__split
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_header_align__split
+msgid "Logo start / details end"
+msgstr "الشعار في البداية / البيانات في النهاية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_table_style
+msgid "Look of the lines tables (dynamic body and Odoo's own report body). \"Layout Default\" lets the chosen layout decide."
+msgstr "مظهر جداول البنود (المحتوى الديناميكي ومحتوى تقارير أودو الأصلي). \"افتراضي التخطيط\" يترك القرار للتخطيط المختار."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__montserrat
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__navy_cyan
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__navy_cyan
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__navy_cyan
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__navy_cyan
+msgid "Navy & Cyan"
+msgstr "كحلي وسماوي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__navy_teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__navy_teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__navy_teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__navy_teal
+msgid "Navy & Teal"
+msgstr "كحلي وفيروزي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__navy_yellow
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__navy_yellow
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__navy_yellow
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__navy_yellow
+msgid "Navy & Yellow"
+msgstr "كحلي وأصفر"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "No"
+msgstr "لا"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_notes
+msgid "Notes / Terms"
+msgstr "الملاحظات / الشروط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__noto_kufi_arabic
+msgid "Noto Kufi Arabic (server font)"
+msgstr "نوتو كوفي عربي (خط على الخادم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__noto_naskh_arabic
+msgid "Noto Naskh Arabic (server font)"
+msgstr "نوتو نسخ عربي (خط على الخادم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__noto_sans_mono
+msgid "Noto Sans Mono"
+msgstr "Noto Sans Mono"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__ocean
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__ocean
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__ocean
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__ocean
+msgid "Ocean"
+msgstr "محيطي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__document_type
+msgid "Only for Document"
+msgstr "لمستند محدد فقط"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_profile.py:0
+#, python-format
+msgid "Only one active design per company and document type is allowed (%s). Archive the other design first."
+msgstr "يُسمح بتصميم نشط واحد فقط لكل شركة ونوع مستند (%s). قم بأرشفة التصميم الآخر أولاً."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_font_rule.py:0
+msgid "Only one font rule per company, language and document type is allowed."
+msgstr "يُسمح بقاعدة خط واحدة فقط لكل شركة ولغة ونوع مستند."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__open_sans
+msgid "Open Sans"
+msgstr "Open Sans"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__oswald
+msgid "Oswald"
+msgstr "Oswald"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_footer_content
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.external_layout_dyn_teal
+msgid "Page"
+msgstr "صفحة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__footer_show_page_number
+msgid "Page Numbers"
+msgstr "أرقام الصفحات"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__palette
+msgid "Palette"
+msgstr "لوحة الألوان"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Partner"
+msgstr "الشريك"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_partner_block
+msgid "Partner Address"
+msgstr "عنوان الشريك"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Pay in a flash! Scan the QR code to pay online."
+msgstr "ادفع بسرعة! امسح رمز QR للدفع عبر الإنترنت."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_document_body
+msgid "Payment Communication:"
+msgstr "مرجع الدفع:"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_company_form_pdf_design
+msgid "PDF Design"
+msgstr "تصميم PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:pdf_report_dynamic_design.model_pdf_design_field
+msgid "PDF Design Field"
+msgstr "حقل تصميم PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.ui.menu,name:pdf_report_dynamic_design.menu_pdf_design_root
+msgid "PDF Designs"
+msgstr "تصاميم PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:pdf_report_dynamic_design.model_pdf_design_profile
+msgid "PDF Document Design"
+msgstr "تصميم مستند PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.actions.act_window,name:pdf_report_dynamic_design.action_pdf_design_profile
+msgid "PDF Document Designs"
+msgstr "تصاميم مستندات PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:pdf_report_dynamic_design.model_pdf_design_engine
+msgid "PDF Dynamic Design Engine"
+msgstr "محرك تصميم PDF الديناميكي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:pdf_report_dynamic_design.model_pdf_design_font_rule
+msgid "PDF Font per Language"
+msgstr "خط PDF حسب اللغة"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:pdf_report_dynamic_design.action_pdf_design_profile
+msgid "Pick a layout, colors and the fields to print on quotations, orders, RFQs, purchase orders, transfers, invoices and journal entries. Documents without a design keep using the company document layout."
+msgstr "اختر التخطيط والألوان والحقول المطبوعة في عروض الأسعار وأوامر البيع وطلبات عروض الأسعار وأوامر الشراء والتحويلات والفواتير وقيود اليومية. المستندات بلا تصميم تستمر في استخدام تخطيط مستندات الشركة."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_palette
+msgid "Pick a preset to fill the primary, accent, surface and border colors."
+msgstr "اختر مجموعة جاهزة لتعبئة اللون الأساسي والثانوي ولون الخلفية ولون الحدود."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_font_rule.py:0
+msgid "Please enter the custom font name."
+msgstr "يرجى إدخال اسم الخط المخصص."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_document_body
+msgid "Prepared By"
+msgstr "أعدّه"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Preview PDF"
+msgstr "معاينة PDF"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__primary_color
+msgid "Primary Color"
+msgstr "اللون الأساسي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_res_company__dyn_footer_thanks
+msgid "Print \"Thank you for your business!\" in the designs that have one."
+msgstr "طباعة \"شكراً لتعاملكم معنا!\" في التصاميم التي تتضمنه."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Printed after the lines, next to the totals."
+msgstr "تُطبع بعد البنود، بجوار الإجماليات."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__profile_id
+msgid "Profile"
+msgstr "التصميم"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__purchase_order
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__purchase_order
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Quotation"
+msgstr "عرض سعر"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__raleway
+msgid "Raleway"
+msgstr "Raleway"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Receipt"
+msgstr "إيصال استلام"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.dyn_document_body
+msgid "Received By"
+msgstr "استلمه"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__purchase_rfq
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__purchase_rfq
+msgid "Request for Quotation"
+msgstr "طلب عرض سعر"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Reset Fields to Defaults"
+msgstr "إعادة الحقول إلى الافتراضي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__direction__rtl
+msgid "Right to Left"
+msgstr "من اليمين إلى اليسار"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__roboto
+msgid "Roboto"
+msgstr "Roboto"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__royal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__royal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__royal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__royal
+msgid "Royal"
+msgstr "ملكي"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__sale_order
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__sale_order
+msgid "Sales Order"
+msgstr "أمر بيع"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__sale_quotation
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__sale_quotation
+msgid "Sales Quotation"
+msgstr "عرض سعر مبيعات"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_field_tree
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Same as field"
+msgstr "نفس تسمية الحقل"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Scan me with your banking app."
+msgstr "امسحني باستخدام تطبيقك المصرفي."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__section
+msgid "Section"
+msgstr "القسم"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__sequence
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_font_rule__sequence
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_footer
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_show_footer
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_show_footer
+msgid "Show Footer"
+msgstr "إظهار التذييل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_header
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_show_header
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_show_header
+msgid "Show Header"
+msgstr "إظهار الترويسة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__show_if_empty
+msgid "Show When Empty"
+msgstr "إظهار عند الفراغ"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_signature
+msgid "Signature Boxes"
+msgstr "خانات التوقيع"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__slate_green
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__slate_green
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__slate_green
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__slate_green
+msgid "Slate & Green"
+msgstr "رمادي داكن وأخضر"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_spacing
+msgid "Spacing (mm)"
+msgstr "التباعد (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__density__spacious
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_density__spacious
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_density__spacious
+msgid "Spacious"
+msgstr "واسع"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__body_mode__standard
+msgid "Standard Odoo body + selected fields"
+msgstr "محتوى أودو القياسي + الحقول المختارة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__align__start
+msgid "Start"
+msgstr "البداية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__table_style__striped
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_table_style__striped
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_table_style__striped
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_table_style__striped
+msgid "Striped"
+msgstr "مخطط"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_zebra
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_zebra
+msgid "Striped Lines"
+msgstr "بنود مخططة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_report_layout__dyn_footer_height
+msgid "Suggested Footer Height (mm)"
+msgstr "ارتفاع التذييل المقترح (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_report_layout__dyn_header_height
+msgid "Suggested Header Height (mm)"
+msgstr "ارتفاع الترويسة المقترح (مم)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_report_layout__dyn_palette
+msgid "Suggested Palette"
+msgstr "لوحة الألوان المقترحة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_report_layout__dyn_table_style
+msgid "Suggested Tables"
+msgstr "الجداول المقترحة"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_field__section__summary
+msgid "Summary"
+msgstr "الملخص"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__summary_field_ids
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "Summary Fields"
+msgstr "حقول الملخص"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__sunset
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__sunset
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__sunset
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__sunset
+msgid "Sunset"
+msgstr "غروب"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__surface_color
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_surface_color
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_surface_color
+msgid "Surface Color"
+msgstr "لون الخلفية"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_density
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_density
+msgid "Table Density"
+msgstr "كثافة الجدول"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__table_style
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_table_style
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_table_style
+msgid "Tables"
+msgstr "الجداول"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__header_show_tagline
+msgid "Tagline"
+msgstr "الشعار النصي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__font__tajawal
+msgid "Tajawal (Arabic)"
+msgstr "تجوال (عربي)"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__target_model
+msgid "Target Model"
+msgstr "النموذج المستهدف"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Tax ID"
+msgstr "الرقم الضريبي"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Taxes"
+msgstr "الضرائب"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__palette__teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__report_layout__dyn_palette__teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__res_company__dyn_palette__teal
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__base_document_layout__dyn_palette__teal
+msgid "Teal"
+msgstr "فيروزي"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__field_name
+msgid "Technical Name"
+msgstr "الاسم التقني"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:pdf_report_dynamic_design.field_pdf_design_field__target_model
+msgid "Technical: model whose fields can be picked for this section."
+msgstr "تقني: النموذج الذي يمكن اختيار حقوله لهذا القسم."
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_res_company__dyn_text_color
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_base_document_layout__dyn_text_color
+msgid "Text Color"
+msgstr "لون النص"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.external_layout_dyn_teal
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.external_layout_dyn_wave
+msgid "Thank you for your business!"
+msgstr "شكراً لتعاملكم معنا!"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_profile.py:0
+msgid "There is no document of this type to preview yet."
+msgstr "لا يوجد مستند من هذا النوع لمعاينته بعد."
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.view_pdf_design_profile_form
+msgid "This replaces all selected fields with the defaults. Continue?"
+msgstr "سيؤدي هذا إلى استبدال جميع الحقول المختارة بالحقول الافتراضية. هل تريد المتابعة؟"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__title
+msgid "Title"
+msgstr "العنوان"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+#: model_terms:ir.ui.view,arch_db:pdf_report_dynamic_design.report_journal_entry_document
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Total Credit"
+msgstr "إجمالي الدائن"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Total Debit"
+msgstr "إجمالي المدين"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_profile__show_totals
+msgid "Totals"
+msgstr "الإجماليات"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Transfer"
+msgstr "تحويل"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_font_rule__document_type__stock_picking
+#: model:ir.model.fields.selection,name:pdf_report_dynamic_design.selection__pdf_design_profile__document_type__stock_picking
+msgid "Transfer / Delivery Slip"
+msgstr "تحويل / إيصال تسليم"
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:pdf_report_dynamic_design.field_pdf_design_field__field_type
+msgid "Type"
+msgstr "النوع"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Untaxed Amount"
+msgstr "المبلغ قبل الضريبة"
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Vendor"
+msgstr "المورد"
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:pdf_report_dynamic_design.action_pdf_design_font_rule
+msgid "Without a rule, right-to-left languages such as Arabic use Tajawal and the others use the company font. A bundled multi-script font is always added as a fallback so no character is ever printed as an empty box."
+msgstr "بدون قاعدة، تستخدم اللغات من اليمين إلى اليسار مثل العربية خط تجوال، وتستخدم اللغات الأخرى خط الشركة. يُضاف دائماً خط احتياطي مضمّن متعدد اللغات حتى لا يُطبع أي حرف كمربع فارغ."
+
+#. module: pdf_report_dynamic_design
+#. odoo-python
+#: code:addons/pdf_report_dynamic_design/models/pdf_design_engine.py:0
+msgid "Yes"
+msgstr "نعم"

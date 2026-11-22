@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_journal_entry" model="ir.actions.report">
+        <field name="name">Journal Entry (PDF)</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pdf_report_dynamic_design.report_journal_entry</field>
+        <field name="report_file">pdf_report_dynamic_design.report_journal_entry</field>
+        <field name="print_report_name">'Journal Entry - %s' % ((object.name or '').replace('/', '_'))</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_journal_entry_document">
+        <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o, 'journal_entry')"/>
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context(lang=dyn['lang'])"/>
+            <t t-if="dyn.get('body_mode') == 'dynamic'" t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            <div t-else="" class="page">
+                <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+                <h2>
+                    <span>Journal Entry</span>
+                    <span t-field="o.name"/>
+                </h2>
+                <div class="row mt-3 mb-3">
+                    <div class="col-4">
+                        <strong>Date</strong>
+                        <div t-field="o.date"/>
+                    </div>
+                    <div class="col-4">
+                        <strong>Journal</strong>
+                        <div t-field="o.journal_id"/>
+                    </div>
+                    <div class="col-4" t-if="o.ref">
+                        <strong>Reference</strong>
+                        <div t-field="o.ref"/>
+                    </div>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Partner</th>
+                            <th>Label</th>
+                            <th class="text-end">Debit</th>
+                            <th class="text-end">Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td><span t-field="line.account_id"/></td>
+                            <td><span t-field="line.partner_id"/></td>
+                            <td><span t-field="line.name"/></td>
+                            <td class="text-end"><span t-field="line.debit"/></td>
+                            <td class="text-end"><span t-field="line.credit"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total</strong></td>
+                            <td class="text-end"><strong t-esc="sum(o.line_ids.mapped('debit'))"
+                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                            <td class="text-end"><strong t-esc="sum(o.line_ids.mapped('credit'))"
+                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div t-if="not is_html_empty(o.narration)" t-field="o.narration"/>
+                <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_journal_entry">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="pdf_report_dynamic_design.report_journal_entry_document"
+                   t-lang="o.partner_id.lang or o.env.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

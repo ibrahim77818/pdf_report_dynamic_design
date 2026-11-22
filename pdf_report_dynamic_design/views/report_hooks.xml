@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Non-invasive hooks: QWeb view inheritance only. Each document template
+        computes "dyn" once (before web.external_layout) and either keeps the Odoo
+        body (+ selected fields) or swaps in the dynamic body.
+    -->
+
+    <!-- Per-document layout dispatch, falls back to the company layout. -->
+    <template id="dyn_web_external_layout" inherit_id="web.external_layout">
+        <xpath expr="//t[@t-if='company.external_report_layout_id']" position="before">
+            <!-- Reports without a body hook (country templates...) still get their design. -->
+            <t t-if="not dyn" t-set="dyn"
+               t-value="company.env['pdf.design.engine']._dyn_context_for_layout(o or None, company)"/>
+            <t t-if="dyn and dyn.get('layout_key')" t-call="{{dyn['layout_key']}}"><t t-out="0"/></t>
+        </xpath>
+        <xpath expr="//t[@t-if='company.external_report_layout_id']" position="attributes">
+            <attribute name="t-if"/>
+            <attribute name="t-elif">company.external_report_layout_id</attribute>
+        </xpath>
+    </template>
+
+    <!-- ===================== Sales ===================== -->
+    <template id="dyn_report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="dyn" t-value="doc.env['pdf.design.engine']._dyn_context(doc)"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ===================== Purchase: RFQ ===================== -->
+    <template id="dyn_report_purchasequotation_document" inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o, 'purchase_rfq')"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ===================== Purchase: PO ===================== -->
+    <template id="dyn_report_purchaseorder_document" inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o)"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ===================== Stock: delivery slip ===================== -->
+    <template id="dyn_report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o)"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ===================== Stock: picking operations ===================== -->
+    <!-- Odoo 19: the operations sheet no longer uses web.external_layout (no company
+         header/footer, bare article): only its body is designed. -->
+    <template id="dyn_report_picking" inherit_id="stock.report_picking">
+        <xpath expr="//div[hasclass('page')]" position="before">
+            <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o)"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ===================== Accounting: invoices / bills ===================== -->
+    <template id="dyn_report_invoice_document" inherit_id="account.report_invoice_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="before">
+            <t t-set="dyn" t-value="o.env['pdf.design.engine']._dyn_context(o)"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/*[1]" position="before">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_top"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <t t-call="pdf_report_dynamic_design.dyn_standard_bottom"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+            <attribute name="t-if">dyn.get('body_mode') != 'dynamic'</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="after">
+            <t t-if="dyn.get('body_mode') == 'dynamic'">
+                <t t-set="address" t-value="None"/>
+                <t t-set="information_block" t-value="None"/>
+                <t t-call="pdf_report_dynamic_design.dyn_document_body"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

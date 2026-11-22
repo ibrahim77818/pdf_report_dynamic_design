@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Listed in "Configure Document Layout" next to the standard layouts. -->
+    <record id="report_layout_dyn_modern" model="report.layout">
+        <field name="name">Dynamic Modern</field>
+        <field name="sequence">20</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_modern"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_modern.png</field>
+    </record>
+    <record id="report_layout_dyn_minimal" model="report.layout">
+        <field name="name">Dynamic Minimal</field>
+        <field name="sequence">21</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_minimal"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_minimal.png</field>
+    </record>
+    <record id="report_layout_dyn_corporate" model="report.layout">
+        <field name="name">Dynamic Corporate</field>
+        <field name="sequence">22</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_corporate"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_corporate.png</field>
+    </record>
+    <record id="report_layout_dyn_elegant" model="report.layout">
+        <field name="name">Dynamic Elegant</field>
+        <field name="sequence">23</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_elegant"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_elegant.png</field>
+    </record>
+    <record id="report_layout_dyn_banner" model="report.layout">
+        <field name="name">Banner</field>
+        <field name="sequence">30</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_banner"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_banner.png</field>
+        <field name="dyn_palette">slate_green</field>
+        <field name="dyn_header_height">24</field>
+        <field name="dyn_footer_height">14</field>
+    </record>
+    <record id="report_layout_dyn_teal" model="report.layout">
+        <field name="name">Teal Block</field>
+        <field name="sequence">31</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_teal"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_teal.png</field>
+        <field name="dyn_palette">teal</field>
+        <field name="dyn_header_height">24</field>
+        <field name="dyn_footer_height">30</field>
+    </record>
+    <record id="report_layout_dyn_accent" model="report.layout">
+        <field name="name">Accent Strip</field>
+        <field name="sequence">32</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_accent"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_accent.png</field>
+        <field name="dyn_palette">navy_yellow</field>
+        <field name="dyn_header_height">32</field>
+        <field name="dyn_footer_height">16</field>
+    </record>
+    <record id="report_layout_dyn_angled" model="report.layout">
+        <field name="name">Angled</field>
+        <field name="sequence">33</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_angled"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_angled.png</field>
+        <field name="dyn_palette">navy_teal</field>
+        <field name="dyn_header_height">32</field>
+        <field name="dyn_footer_height">22</field>
+    </record>
+    <record id="report_layout_dyn_chevron" model="report.layout">
+        <field name="name">Chevron</field>
+        <field name="sequence">34</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_chevron"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_chevron.png</field>
+        <field name="dyn_palette">navy_cyan</field>
+        <field name="dyn_header_height">34</field>
+        <field name="dyn_footer_height">18</field>
+    </record>
+    <record id="report_layout_dyn_wave" model="report.layout">
+        <field name="name">Swoosh</field>
+        <field name="sequence">35</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_wave"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_wave.png</field>
+        <field name="dyn_palette">charcoal_orange</field>
+        <field name="dyn_header_height">38</field>
+        <field name="dyn_footer_height">26</field>
+    </record>
+    <record id="report_layout_dyn_geometric" model="report.layout">
+        <field name="name">Geometric</field>
+        <field name="sequence">36</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_geometric"/>
+        <field name="dyn_table_style">auto</field>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_geometric.png</field>
+        <field name="dyn_palette">teal</field>
+        <field name="dyn_header_height">34</field>
+        <field name="dyn_footer_height">18</field>
+    </record>
+    <record id="report_layout_dyn_v20_light" model="report.layout">
+        <field name="name">Light</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_light"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_light.png</field>
+        <field name="dyn_header_height">26</field>
+        <field name="dyn_footer_height">14</field>
+    </record>
+    <record id="report_layout_dyn_v20_bubble" model="report.layout">
+        <field name="name">Bubble</field>
+        <field name="sequence">2</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_bubble"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_bubble.png</field>
+        <field name="dyn_header_height">32</field>
+        <field name="dyn_footer_height">16</field>
+    </record>
+    <record id="report_layout_dyn_v20_wave" model="report.layout">
+        <field name="name">Wave</field>
+        <field name="sequence">3</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_wave"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_wave.png</field>
+        <field name="dyn_header_height">32</field>
+        <field name="dyn_footer_height">18</field>
+    </record>
+    <record id="report_layout_dyn_v20_folder" model="report.layout">
+        <field name="name">Folder</field>
+        <field name="sequence">4</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_folder"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_folder.png</field>
+        <field name="dyn_header_height">30</field>
+        <field name="dyn_footer_height">14</field>
+    </record>
+    <record id="report_layout_dyn_v20_center" model="report.layout">
+        <field name="name">Center</field>
+        <field name="sequence">5</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_center"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_center.png</field>
+        <field name="dyn_header_height">34</field>
+        <field name="dyn_footer_height">16</field>
+    </record>
+    <record id="report_layout_dyn_v20_dual" model="report.layout">
+        <field name="name">Dual</field>
+        <field name="sequence">6</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_dual"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_dual.png</field>
+        <field name="dyn_header_height">26</field>
+        <field name="dyn_footer_height">14</field>
+    </record>
+    <record id="report_layout_dyn_v20_lines" model="report.layout">
+        <field name="name">Lines</field>
+        <field name="sequence">7</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_lines"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_lines.png</field>
+        <field name="dyn_header_height">30</field>
+        <field name="dyn_footer_height">18</field>
+    </record>
+    <record id="report_layout_dyn_v20_compact" model="report.layout">
+        <field name="name">Compact</field>
+        <field name="sequence">8</field>
+        <field name="view_id" ref="pdf_report_dynamic_design.external_layout_dyn_v20_compact"/>
+        <field name="image">/pdf_report_dynamic_design/static/img/layout_v20_compact.png</field>
+        <field name="dyn_header_height">18</field>
+        <field name="dyn_footer_height">10</field>
+    </record>
+    <!-- Offer the Odoo 20 style set in the picker (legacy layouts stay usable). -->
+    <function model="report.layout" name="_dyn_hide_legacy_layouts"/>
+</odoo>

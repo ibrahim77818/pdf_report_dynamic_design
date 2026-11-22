@@ -1,0 +1,1121 @@
+# -*- coding: utf-8 -*-
+"""Rendering engine of the dynamic PDF designs.
+
+Design goals
+------------
+* **Never break a PDF.** Every public entry point catches its own errors and
+  falls back to a safe context; a single broken field is skipped, not fatal.
+* **Flat query count.** Configuration is ORM-cached per (company, document type,
+  language); line values are fetched column by column on the whole recordset
+  (prefetch), so 5 lines and 500 lines cost the same number of queries.
+* **No core changes.** Templates call ``_dyn_context`` from inherited views only.
+"""
+import hashlib
+import logging
+from urllib.parse import quote_plus as url_quote_plus
+
+from markupsafe import Markup, escape
+
+from odoo import _, api, fields, models
+from odoo.api import ormcache
+from odoo.exceptions import AccessError, MissingError, ValidationError
+from odoo.tools import format_date, format_datetime, formatLang, html2plaintext, is_html_empty
+from odoo.tools.misc import babel_locale_parse, format_time, posix_to_ldml
+from odoo.tools.image import image_data_uri
+
+from .dyn_designs import decorations, design_css, design_from_key, mix, table_css
+from .dyn_common import (
+    DENSITY_PADDING, DEFAULT_COLORS, DOC_TYPES, FONT_CSS_NAMES, LTR_FALLBACK_STACK,
+    DESIGN_TABLE_DEFAULT, DESIGNS, MAX_BAND_MM, MAX_FONT_PT, MAX_SPACING_MM, MIN_FONT_PT, ODOO_BODY_FIELDS, MIN_BAND_MM, MIN_SPACING_MM, RTL_FALLBACK_STACK,
+    clamp, sanitize_color, sanitize_font_name,
+)
+
+_logger = logging.getLogger(__name__)
+
+MAX_TEXT_LEN = 400
+HEADER_TOP_PAD_MM = 5.0
+SECTION_TYPES = ('line_section', 'line_note')
+
+
+def _luminance(hex_color):
+    try:
+        r, g, b = (int(hex_color[i:i + 2], 16) / 255.0 for i in (1, 3, 5))
+    except (TypeError, ValueError, IndexError):
+        return 0.0
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+class PdfDesignEngine(models.AbstractModel):
+    _name = 'pdf.design.engine'
+    _description = 'PDF Dynamic Design Engine'
+
+    # ======================================================================
+    # Cache
+    # ======================================================================
+    @api.model
+    def dyn_clear_cache(self):
+        # Odoo 20: ormcaches live in the transaction (Registry.clear_cache() is gone).
+        self.env.transaction.invalidate_ormcache()
+
+    @api.model
+    @ormcache('company_id', 'doc_type', 'lang')
+    def _dyn_profile_config(self, company_id, doc_type, lang):
+        """Plain-data snapshot of the active profile (or None). Cached."""
+        if not doc_type:
+            return None
+        profile = self.env['pdf.design.profile'].sudo().with_context(lang=lang).search([
+            ('company_id', '=', company_id), ('document_type', '=', doc_type),
+        ], limit=1)
+        if not profile:
+            return None
+
+        # Odoo labels account.move.line.name "Label" (Arabic: "بطاقة عنوان"), which
+        # reads badly as a column title: line descriptions get our own wording.
+        label_field = DOC_TYPES.get(doc_type, {}).get('line_label_field')
+        description = self.with_context(lang=lang)._dyn_description_label()
+
+        def field_cfgs(lines, is_line=False):
+            res = []
+            for line in lines.sorted(lambda l: (l.sequence, l.id)):
+                if not line.field_id or not line.field_name:
+                    continue
+                # Odoo 20 adds a computed ``label`` (also called "Label"): same treatment.
+                default_label = description \
+                    if is_line and line.field_name in (label_field, 'label') \
+                    else line.field_id.field_description
+                res.append({
+                    'name': line.field_name,
+                    'label': line.label or default_label or line.field_name,
+                    'align': line.align,
+                    'show_if_empty': line.show_if_empty,
+                })
+            return tuple(res)
+
+        cfg = {
+            'id': profile.id,
+            'layout_key': profile.report_layout_id.view_id.key or False,
+            'body_mode': profile.body_mode,
+            'title': profile.title or False,
+            'show_partner_block': profile.show_partner_block,
+            'show_totals': profile.show_totals,
+            'show_notes': profile.show_notes,
+            'show_signature': profile.show_signature,
+            'density': None if profile.density == 'company' else profile.density,
+            'table_style': None if profile.table_style == 'company' else profile.table_style,
+            'colors': None,
+            'header': None,
+            'footer': None,
+            'header_fields': field_cfgs(profile.header_field_ids),
+            'summary_fields': field_cfgs(profile.summary_field_ids),
+            'line_fields': field_cfgs(profile.line_field_ids, is_line=True),
+        }
+        if profile.color_mode == 'custom':
+            cfg['colors'] = {
+                'primary': profile.primary_color, 'accent': profile.accent_color,
+                'surface': profile.surface_color, 'border': profile.border_color,
+            }
+        if profile.header_mode == 'custom':
+            cfg['header'] = {
+                'show': profile.show_header, 'logo': profile.header_show_logo,
+                'details': profile.header_show_details, 'tagline': profile.header_show_tagline,
+                'align': profile.header_align, 'height': profile.header_height,
+                'spacing': profile.header_spacing,
+            }
+        if profile.footer_mode == 'custom':
+            cfg['footer'] = {
+                'show': profile.show_footer, 'page_number': profile.footer_show_page_number,
+                'details': profile.footer_show_details, 'text': profile.footer_text or False,
+                'height': profile.footer_height,
+            }
+        return cfg
+
+    @api.model
+    def _dyn_description_label(self):
+        """Column title of line descriptions, in the context language."""
+        return _('Description')
+
+    @api.model
+    @ormcache('company_id', 'doc_type', 'lang')
+    def _dyn_font_rule(self, company_id, doc_type, lang):
+        """(font, custom_font, direction, size) of the best rule, or None. Cached."""
+        Rule = self.env['pdf.design.font.rule'].sudo()
+        base = [('company_id', '=', company_id), ('lang_code', '=', lang)]
+        rule = Rule.browse()
+        if doc_type:
+            rule = Rule.search(base + [('document_type', '=', doc_type)], limit=1)
+        if not rule:
+            rule = Rule.search(base + [('document_type', '=', False)], limit=1)
+        if not rule:
+            return None
+        return (rule.font, rule.custom_font or '', rule.direction, rule.font_size or 0.0)
+
+    # ======================================================================
+    # Public entry point (called from QWeb)
+    # ======================================================================
+    @api.model
+    def _dyn_context(self, record=None, doc_type=None, company=None):
+        """Everything a template needs to render one document. Never raises."""
+        try:
+            return self._dyn_build_context(record, doc_type, company)
+        except Exception:  # pylint: disable=broad-except
+            _logger.exception('pdf_report_dynamic_design: falling back to safe context')
+            return self._dyn_safe_context(company)
+
+    @api.model
+    def _dyn_context_for_layout(self, record=None, company=None):
+        """Context for reports whose body this module does not hook.
+
+        Country or third-party templates (e.g. the Saudi bilingual tax invoice) call
+        ``web.external_layout`` directly. Their document still gets its design's
+        layout, header, footer and table style; the body stays theirs, so the body
+        mode is forced to "standard". Returns None for unsupported records.
+        """
+        try:
+            if record is None or not isinstance(record, models.BaseModel) or len(record) != 1:
+                return None
+            if record._name not in {spec['model'] for spec in DOC_TYPES.values()}:
+                return None
+        except Exception:  # pylint: disable=broad-except
+            return None
+        ctx = self._dyn_context(record, company=company)
+        if ctx.get('body_mode') == 'dynamic':
+            ctx = dict(ctx, body_mode='standard', line_columns=[], line_rows=[],
+                       header_fields=[], summary_fields=[], header_rows=[], summary_rows=[])
+        return ctx
+
+    # ----------------------------------------------------------------------
+    def _dyn_resolve(self, record, company):
+        if record is not None and not isinstance(record, models.BaseModel):
+            record = None
+        if record is not None and (len(record) != 1):
+            record = record[:1] if record else None
+        src = company
+        if src is None and record is not None and 'company_id' in record._fields:
+            src = record.company_id
+        if not src:
+            src = self.env.company
+        real_company = src.company_id if src._name == 'base.document.layout' else src
+        return record, src, real_company.sudo()
+
+    def _dyn_doc_type(self, record, hint=None):
+        if record is None:
+            return hint if hint in DOC_TYPES else None
+        model = record._name
+        if model == 'sale.order':
+            return 'sale_quotation' if record.state in ('draft', 'sent') else 'sale_order'
+        if model == 'purchase.order':
+            if hint == 'purchase_rfq' or record.state in ('draft', 'sent', 'to approve'):
+                return 'purchase_rfq'
+            return 'purchase_order'
+        if model == 'stock.picking':
+            return 'stock_picking'
+        if model == 'account.move':
+            return 'journal_entry' if record.move_type == 'entry' else 'account_invoice'
+        return hint if hint in DOC_TYPES and DOC_TYPES[hint]['model'] == model else None
+
+    def _dyn_lang(self, record):
+        lang = False
+        if record is not None and 'partner_id' in record._fields:
+            try:
+                lang = record.partner_id.lang
+            except (AccessError, MissingError):
+                lang = False
+        lang = lang or self.env.context.get('lang') or self.env.user.lang or 'en_US'
+        # Only active languages are usable.
+        if not self.env['res.lang']._lang_get(lang):
+            lang = self.env.user.lang or 'en_US'
+        return lang
+
+    def _dyn_build_context(self, record, hint, company):
+        record, src, real_company = self._dyn_resolve(record, company)
+        doc_type = self._dyn_doc_type(record, hint)
+        lang = self._dyn_lang(record)
+        self_l = self.with_context(lang=lang)
+        if record is not None:
+            record = record.with_context(lang=lang)
+
+        cfg = self._dyn_profile_config(real_company.id, doc_type, lang) or {}
+        font_rule = self._dyn_font_rule(real_company.id, doc_type, lang)
+
+        style = self_l._dyn_style(src, real_company, cfg, font_rule, lang)
+        self_l = self_l.with_context(dyn_rtl=style['direction'] == 'rtl')
+        company_layout = getattr(src, 'external_report_layout_id', False)
+        company_key = company_layout.sudo().key if company_layout else False
+        own_layout = bool(cfg.get('layout_key')) and cfg.get('layout_key') != company_key
+        hint_h, hint_f = self._dyn_layout_heights(cfg.get('layout_key') or company_key or '')
+        # Use the layout's own band heights when the document has its own layout, or
+        # when the company still has the untouched defaults (32 / 18 mm).
+        if not own_layout:
+            if getattr(src, 'dyn_header_height', 32.0) != 32.0:
+                hint_h = 0.0
+            if getattr(src, 'dyn_footer_height', 18.0) != 18.0:
+                hint_f = 0.0
+        header = self_l._dyn_header(src, real_company, cfg, hint_h)
+        footer = self_l._dyn_footer(src, real_company, cfg, hint_f)
+        design = self._dyn_design(cfg, src)
+        table_style = cfg.get('table_style') or getattr(src, 'dyn_table_style', False) or 'auto'
+        if table_style == 'auto':
+            table_style = DESIGN_TABLE_DEFAULT.get(design)
+        ctx = {
+            'ok': True,
+            'design': design,
+            'table_style': table_style,
+            'arrangement': DESIGNS.get(design, 'panels'),
+            'deco': decorations(design, style, rtl=style['direction'] == 'rtl'),
+            'company_label': self_l._dyn_label_from(),
+            'company_block': self_l._dyn_partner_markup(real_company.partner_id),
+            'company_line': self_l._dyn_partner_line(real_company.partner_id),
+            'record': record,
+            'company': real_company,
+            'doc_type': doc_type,
+            'lang': lang,
+            'direction': style['direction'],
+            'style': style,
+            'header': header,
+            'footer': footer,
+            'margins': self._dyn_margins(header, footer, src),
+            'layout_key': cfg.get('layout_key') or False,
+            'body_mode': cfg.get('body_mode') or 'standard',
+            'has_profile': bool(cfg),
+            'show_partner_block': cfg.get('show_partner_block', True),
+            'show_totals': cfg.get('show_totals', True),
+            'show_notes': cfg.get('show_notes', True),
+            'show_signature': cfg.get('show_signature', False),
+            'title': '', 'doc_name': '',
+            'header_fields': [], 'summary_fields': [],
+            'line_columns': [], 'line_rows': [], 'totals': [],
+            'partners': [], 'notes': False,
+            'payment_ref': False, 'payment_terms': False, 'qr_codes': [], 'legal_banner': False,
+        }
+        if record is not None and doc_type:
+            ctx['title'] = cfg.get('title') or self_l._dyn_default_title(record, doc_type)
+            ctx['doc_name'] = self_l._dyn_bidi(
+                record.display_name if doc_type != 'stock_picking' else record.name)
+            header_cfgs = cfg.get('header_fields') or ()
+            summary_cfgs = cfg.get('summary_fields') or ()
+            line_cfgs = cfg.get('line_fields') or ()
+            if ctx['body_mode'] != 'dynamic':
+                # Odoo keeps its own body: print only what it does not show already.
+                header_cfgs = self._dyn_extra_only(doc_type, 'header', header_cfgs)
+                summary_cfgs = self._dyn_extra_only(doc_type, 'header', summary_cfgs)
+                line_cfgs = self._dyn_extra_only(doc_type, 'line', line_cfgs)
+                if line_cfgs:
+                    # Give the extra columns their context: the line description first.
+                    label_field = DOC_TYPES[doc_type]['line_label_field']
+                    line_cfgs = ({'name': label_field, 'label': self_l._dyn_description_label(),
+                                  'align': 'start', 'show_if_empty': False},) + tuple(line_cfgs)
+            ctx['header_fields'] = self_l._dyn_record_values(record, header_cfgs)
+            ctx['summary_fields'] = self_l._dyn_record_values(record, summary_cfgs)
+            lines = self_l._dyn_lines(record, doc_type)
+            if lines is not None and line_cfgs:
+                ctx['line_columns'], ctx['line_rows'] = self_l._dyn_line_table(
+                    lines, line_cfgs, style)
+            if ctx['body_mode'] == 'dynamic':
+                ctx['partners'] = self_l._dyn_partners(record, doc_type)
+                ctx['totals'] = self_l._dyn_totals(record, doc_type, lines)
+                ctx['notes'] = self_l._dyn_notes(record)
+                if doc_type == 'account_invoice':
+                    ctx.update(self_l._dyn_invoice_extras(
+                        record, tuple(header_cfgs) + tuple(summary_cfgs)))
+            if doc_type == 'account_invoice':
+                ctx['footer']['legal'] = self_l._dyn_zatca_footer(record)
+                ctx['legal_banner'] = self_l._dyn_zatca_banner(record)
+        self._dyn_finalize(ctx)
+        return ctx
+
+    @staticmethod
+    def _dyn_chunk(items, size=4):
+        rows = []
+        for i in range(0, len(items), size):
+            row = list(items[i:i + size])
+            row += [None] * (size - len(row))
+            rows.append(row)
+        return rows
+
+    def _dyn_finalize(self, ctx):
+        """Template helpers derived from the context (keeps QWeb logic-free)."""
+        ctx['header_rows'] = self._dyn_chunk(ctx['header_fields'])
+        # Strips (Banner, Dual, Swoosh): as many equal cells as fields, max 4 per row,
+        # so there is no empty trailing cell and long values get room.
+        count = len(ctx['header_fields'])
+        size = count if count <= 4 else (3 if count in (5, 6, 9) else 4)
+        ctx['strip_rows'] = self._dyn_chunk(ctx['header_fields'], size) if count else []
+        ctx['strip_width'] = '%d%%' % (100 // size) if count else '100%'
+        ctx['summary_rows'] = self._dyn_chunk(ctx['summary_fields'])
+        ctx['partners_single'] = len(ctx['partners']) == 1
+        ctx['line_colspan'] = len(ctx['line_columns']) + (1 if ctx['style'].get('line_numbers') else 0)
+        ctx['css'] = self._dyn_css(ctx)
+        return ctx
+
+    def _dyn_label_from(self):
+        return _('From')
+
+    def _dyn_partner_compact(self, partner):
+        """Name / one-line address / phone \u00b7 email: fits decorated header bands."""
+        if not partner:
+            return Markup('')
+        try:
+            address = ', '.join(l.strip() for l in (partner._display_address(without_company=True) or '')
+                                .splitlines() if l.strip())
+            contact = ' \u00b7 '.join(p for p in (partner.phone, partner.email) if p)
+        except (AccessError, MissingError):
+            return Markup('')
+        bidi = self._dyn_bidi
+        parts = [Markup('<strong>%s</strong>') % bidi(partner.name or '')]
+        parts += [bidi(p) for p in (address, contact) if p]
+        return Markup('<br/>').join(parts)
+
+    def _dyn_partner_line(self, partner):
+        """One-line company identity for compact footers: name, address on one line."""
+        if not partner:
+            return ''
+        try:
+            address = ', '.join(l.strip() for l in (partner._display_address(without_company=True) or '')
+                                .splitlines() if l.strip())
+        except (AccessError, MissingError):
+            address = ''
+        return self._dyn_bidi(' \u2014 '.join(p for p in (partner.name, address) if p))
+
+    def _dyn_design(self, cfg, src):
+        key = cfg.get('layout_key') or False
+        if not key:
+            layout = getattr(src, 'external_report_layout_id', False)
+            key = layout.sudo().key if layout else False
+        return design_from_key(key)
+
+    def _dyn_safe_context(self, company=None):
+        """Static context used if anything goes wrong: plain, but always valid."""
+        colors = dict(DEFAULT_COLORS)
+        style = dict(colors, on_primary='#FFFFFF', on_accent='#FFFFFF', direction='ltr', align_start='left',
+                     align_end='right', font_family="'Lato', 'DynFallback', sans-serif",
+                     font_size=10.0, padding=DENSITY_PADDING['comfortable'], zebra=True,
+                     line_numbers=False, scope='o_dyn_safe')
+        name = ''
+        try:
+            name = (company.company_id if company._name == 'base.document.layout' else company).name
+        except Exception:  # pylint: disable=broad-except
+            name = ''
+        header = {'show': True, 'logo': False, 'details': Markup(''), 'details_compact': Markup(''),
+                  'tagline': False,
+                  'align': 'split', 'height': 30.0, 'spacing': 5.0, 'name': name}
+        footer = {'show': True, 'page_number': True, 'details': False, 'text': False, 'height': 16.0,
+                  'thanks': False}
+        ctx = {
+            'ok': False, 'design': 'standard', 'arrangement': 'panels', 'table_style': None,
+            'deco': {'header': False, 'footer': False, 'mirror': False},
+            'company_label': '', 'company_block': Markup(''), 'record': None, 'company': company, 'doc_type': None, 'lang': 'en_US',
+            'direction': 'ltr', 'style': style, 'header': header, 'footer': footer,
+            'margins': {'top': 35.0, 'spacing': 5.0, 'bottom': 20.0, 'auto': False},
+            'layout_key': False, 'body_mode': 'standard', 'has_profile': False,
+            'show_partner_block': True, 'show_totals': True, 'show_notes': True,
+            'show_signature': False, 'title': '', 'doc_name': '', 'header_fields': [],
+            'summary_fields': [], 'line_columns': [], 'line_rows': [], 'totals': [],
+            'partners': [], 'notes': False,
+            'payment_ref': False, 'payment_terms': False, 'qr_codes': [], 'legal_banner': False,
+        }
+        return self._dyn_finalize(ctx)
+
+    # ======================================================================
+    # Style, header, footer
+    # ======================================================================
+    def _dyn_style(self, src, company, cfg, font_rule, lang):
+        colors = cfg.get('colors') or {}
+        primary = sanitize_color(colors.get('primary') or getattr(src, 'primary_color', False),
+                                 DEFAULT_COLORS['primary'])
+        accent = sanitize_color(colors.get('accent') or getattr(src, 'secondary_color', False),
+                                DEFAULT_COLORS['accent'])
+        surface = sanitize_color(colors.get('surface') or getattr(src, 'dyn_surface_color', False),
+                                 DEFAULT_COLORS['surface'])
+        border = sanitize_color(colors.get('border') or getattr(src, 'dyn_border_color', False),
+                                DEFAULT_COLORS['border'])
+        text = sanitize_color(getattr(src, 'dyn_text_color', False), DEFAULT_COLORS['text'])
+
+        lang_rec = self.env['res.lang']._lang_get(lang)
+        direction = (lang_rec.direction if lang_rec else 'ltr') or 'ltr'
+        font_key = getattr(src, 'font', False) or 'Lato'
+        custom_font = ''
+        size = getattr(src, 'dyn_base_font_size', 0.0) or 10.0
+        if font_rule:
+            font_key, custom_font, rule_dir, rule_size = font_rule
+            if rule_dir in ('ltr', 'rtl'):
+                direction = rule_dir
+            size = rule_size or size
+        elif direction == 'rtl' and font_key not in ('Tajawal', 'DynFallback'):
+            # Company font (usually Latin-only) + Arabic text: use an Arabic font.
+            font_key = 'Tajawal'
+        family = sanitize_font_name(custom_font) if font_key == 'custom' else \
+            FONT_CSS_NAMES.get(font_key, font_key)
+        stack = RTL_FALLBACK_STACK if direction == 'rtl' else LTR_FALLBACK_STACK
+        families = ["'%s'" % family] if family else []
+        families += [f for f in stack if f not in families]
+
+        density = cfg.get('density') or getattr(src, 'dyn_density', False) or 'comfortable'
+        style = {
+            'primary': primary, 'accent': accent, 'surface': surface, 'border': border,
+            'text': text,
+            'on_primary': '#1F2328' if _luminance(primary) > 0.6 else '#FFFFFF',
+            'on_accent': '#1F2328' if _luminance(accent) > 0.6 else '#FFFFFF',
+            'direction': direction,
+            'align_start': 'right' if direction == 'rtl' else 'left',
+            'align_end': 'left' if direction == 'rtl' else 'right',
+            'font_family': ', '.join(families),
+            'font_size': clamp(size, MIN_FONT_PT, MAX_FONT_PT),
+            'padding': DENSITY_PADDING.get(density, DENSITY_PADDING['comfortable']),
+            'zebra': bool(getattr(src, 'dyn_zebra', True)),
+            'line_numbers': bool(getattr(src, 'dyn_show_line_numbers', False)),
+        }
+        digest = hashlib.md5(repr(sorted(style.items())).encode()).hexdigest()[:10]
+        style['scope'] = 'o_dyn_%s' % digest
+        return style
+
+    @api.model
+    @ormcache('view_key')
+    def _dyn_layout_heights(self, view_key):
+        """(header, footer) heights suggested by the report.layout of ``view_key``."""
+        if not view_key:
+            return 0.0, 0.0
+        layout = self.env['report.layout'].sudo().search([('view_id.key', '=', view_key)], limit=1)
+        return (layout.dyn_header_height or 0.0, layout.dyn_footer_height or 0.0)
+
+    def _dyn_header(self, src, company, cfg, hint_height=0.0):
+        over = cfg.get('header')
+        if over:
+            show, logo, details, tagline = over['show'], over['logo'], over['details'], over['tagline']
+            align, height, spacing = over['align'], over['height'], over['spacing']
+        else:
+            show = getattr(src, 'dyn_show_header', True)
+            logo = getattr(src, 'dyn_header_show_logo', True)
+            details = getattr(src, 'dyn_header_show_details', True)
+            tagline = getattr(src, 'dyn_header_show_tagline', True)
+            align = getattr(src, 'dyn_header_align', 'split') or 'split'
+            height = hint_height or getattr(src, 'dyn_header_height', 32.0)
+            spacing = getattr(src, 'dyn_header_spacing', 5.0)
+        logo_uri = False
+        if logo:
+            raw = getattr(src, 'logo', False) or company.logo
+            logo_uri = image_data_uri(raw) if raw else False
+        details_markup = details_compact = False
+        if details:
+            html = getattr(src, 'company_details', False)
+            if html and not is_html_empty(html):
+                details_markup = details_compact = self._dyn_bidi_block(Markup(html))
+            else:
+                details_markup = self._dyn_partner_markup(company.partner_id, with_name=False)
+                details_compact = self._dyn_partner_compact(company.partner_id)
+        tagline_markup = False
+        if tagline:
+            html = getattr(src, 'report_header', False)
+            tagline_markup = Markup(html) if html and not is_html_empty(html) else False
+        return {
+            'show': bool(show), 'logo': logo_uri, 'details': details_markup,
+            # 3 lines max, for headers whose shapes leave little free space
+            'details_compact': details_compact,
+            'tagline': tagline_markup, 'align': align, 'name': company.name,
+            'height': clamp(height, MIN_BAND_MM, MAX_BAND_MM),
+            'spacing': clamp(spacing, MIN_SPACING_MM, MAX_SPACING_MM),
+        }
+
+    def _dyn_footer(self, src, company, cfg, hint_height=0.0):
+        over = cfg.get('footer')
+        extra = False
+        if over:
+            show, page_number, details, height = over['show'], over['page_number'], \
+                over['details'], over['height']
+            extra = over['text']
+        else:
+            show = getattr(src, 'dyn_show_footer', True)
+            page_number = getattr(src, 'dyn_footer_show_page_number', True)
+            details = getattr(src, 'dyn_footer_show_details', True)
+            height = hint_height or getattr(src, 'dyn_footer_height', 18.0)
+        details_markup = False
+        if details:
+            html = getattr(src, 'report_footer', False)
+            details_markup = self._dyn_bidi_block(Markup(html)) \
+                if html and not is_html_empty(html) else False
+        return {
+            'show': bool(show), 'page_number': bool(page_number), 'details': details_markup,
+            'text': self._dyn_bidi(extra) if extra else False,
+            'height': clamp(height, MIN_BAND_MM, MAX_BAND_MM),
+            'thanks': bool(getattr(src, 'dyn_footer_thanks', True)),
+            # legal line required by a localization (e.g. ZATCA issue date)
+            'legal': False,
+        }
+
+    @api.model
+    def _dyn_margins(self, header, footer, src):
+        """Page margins (mm) for wkhtmltopdf.
+
+        wkhtmltopdf draws the header starting at ``margin_top - header_spacing``
+        and lets it grow downward. To keep the header inside its own band:
+            header starts at  TOP_PAD
+            body starts at    TOP_PAD + header height + gap   (= margin_top)
+            header_spacing  = header height + gap
+        """
+        auto = bool(getattr(src, 'dyn_auto_margins', True))
+        if header['show']:
+            band = header['height'] + header['spacing']
+            top = HEADER_TOP_PAD_MM + band
+        else:
+            band = top = 10.0
+        bottom = (footer['height'] + 4.0) if footer['show'] else 10.0
+        return {'top': round(top, 1), 'spacing': round(band, 1),
+                'bottom': round(bottom, 1), 'auto': auto}
+
+    # ======================================================================
+    # Validation (shared by company, profile and font rule constraints)
+    # ======================================================================
+    @api.model
+    def _dyn_check_values(self, record, heights=(), spacings=(), sizes=(), colors=(),
+                          sizes_allow_zero=False):
+        """Raise a ValidationError naming the first out-of-range value.
+
+        ``heights``/``spacings``/``sizes``/``colors`` are field names of ``record``.
+        """
+        def label(fname):
+            return record._fields[fname]._description_string(record.env)
+
+        for fname in heights:
+            value = record[fname] or 0.0
+            if not MIN_BAND_MM <= value <= MAX_BAND_MM:
+                raise ValidationError(_(
+                    '%(field)s must be between %(min)s and %(max)s mm (current value: %(value)s).',
+                    field=label(fname), min=MIN_BAND_MM, max=MAX_BAND_MM, value=value))
+        for fname in spacings:
+            value = record[fname] or 0.0
+            if not MIN_SPACING_MM <= value <= MAX_SPACING_MM:
+                raise ValidationError(_(
+                    '%(field)s must be between %(min)s and %(max)s mm (current value: %(value)s).',
+                    field=label(fname), min=MIN_SPACING_MM, max=MAX_SPACING_MM, value=value))
+        for fname in sizes:
+            value = record[fname] or 0.0
+            if sizes_allow_zero and value == 0.0:
+                continue
+            if not MIN_FONT_PT <= value <= MAX_FONT_PT:
+                raise ValidationError(_(
+                    '%(field)s must be between %(min)s and %(max)s pt (current value: %(value)s).',
+                    field=label(fname), min=MIN_FONT_PT, max=MAX_FONT_PT, value=value))
+        for fname in colors:
+            value = record[fname]
+            if value and not sanitize_color(value, False):
+                raise ValidationError(_(
+                    '%(field)s must be a hexadecimal color such as #1F6FEB (current value: %(value)s).',
+                    field=label(fname), value=value))
+
+    # ======================================================================
+    # Values
+    # ======================================================================
+    def _dyn_can_read(self, model, field):
+        # Odoo 18: Model.user_has_groups() was removed, res.users.has_groups() replaces it.
+        if field.groups and not model.env.user.has_groups(field.groups):
+            return False
+        return field.type not in ('binary', 'one2many', 'reference', 'many2one_reference',
+                                  'json', 'properties', 'properties_definition')
+
+    def _dyn_format(self, record, field, value):
+        """Human readable value of ``field`` on ``record``. Never raises."""
+        try:
+            ftype = field.type
+            if ftype == 'boolean':
+                return _('Yes') if value else _('No')
+            if value is False or value is None or value == '':
+                return ''
+            env = record.env
+            if ftype == 'monetary':
+                currency = False
+                cfield = getattr(field, 'currency_field', None) or (
+                    'currency_id' if 'currency_id' in record._fields else None)
+                if cfield and cfield in record._fields:
+                    currency = record[cfield]
+                if not currency and 'company_id' in record._fields:
+                    currency = record.company_id.currency_id
+                return formatLang(env, value, currency_obj=currency or env.company.currency_id)
+            if ftype == 'float':
+                digits = field.get_digits(env)
+                return formatLang(env, value, digits=digits[1] if digits else 2)
+            if ftype == 'integer':
+                return formatLang(env, value, digits=0)
+            if ftype == 'date':
+                return format_date(env, value, lang_code=env.lang)
+            if ftype == 'datetime':
+                return self._dyn_format_datetime(env, value)
+            if ftype == 'selection':
+                return dict(field._description_selection(env)).get(value, value) or ''
+            if ftype == 'many2one':
+                return value.display_name or ''
+            if ftype == 'many2many':
+                return self._dyn_truncate(', '.join(n for n in value.mapped('display_name') if n))
+            if ftype == 'html':
+                return self._dyn_truncate(html2plaintext(value or ''))
+            return self._dyn_truncate(str(value))
+        except Exception:  # pylint: disable=broad-except
+            _logger.debug('pdf_report_dynamic_design: cannot format %s on %s',
+                          field.name, record, exc_info=True)
+            return ''
+
+    def _dyn_format_datetime(self, env, value):
+        """Date + time without seconds, both in the document language.
+
+        Uses babel (like ``format_date``) so month names and digits follow the
+        language: Arabic documents no longer mix "21 Nov, 2026 06:14 PM" with
+        Arabic dates.
+        """
+        tz = env.context.get('tz') or env.user.tz or 'UTC'
+        try:
+            lang = env['res.lang']._lang_get(env.lang or 'en_US') or \
+                env['res.lang']._lang_get('en_US')
+            locale = babel_locale_parse(lang.code)
+            local = fields.Datetime.context_timestamp(self.with_context(tz=tz), value)
+            date_part = format_date(env, local.date(), lang_code=lang.code)
+            time_fmt = (lang.time_format or '%H:%M:%S')
+            for sec in (':%S', '.%S', '%S'):
+                time_fmt = time_fmt.replace(sec, '')
+            time_part = format_time(env, value, tz=tz, lang_code=lang.code,
+                                    time_format=posix_to_ldml(time_fmt.strip(), locale=locale))
+            return '%s %s' % (date_part, time_part)
+        except Exception:  # pylint: disable=broad-except
+            return format_datetime(env, value, tz=tz, dt_format='short', lang_code=env.lang)
+
+    # ---- bidi ---------------------------------------------------------------
+    @staticmethod
+    def _dyn_has_rtl(text):
+        return any('\u0590' <= ch <= '\u08ff' or '\ufb1d' <= ch <= '\ufefc' for ch in (text or ''))
+
+    def _dyn_bidi(self, value):
+        """In right-to-left documents, isolate left-to-right text (numbers, amounts,
+        phones, Latin names) so the bidi algorithm cannot reorder its punctuation."""
+        if not self.env.context.get('dyn_rtl') or not value:
+            return value
+        text = str(value)
+        if self._dyn_has_rtl(text):
+            return value
+        return Markup('<span dir="ltr" style="unicode-bidi: embed;">%s</span>') % value
+
+    def _dyn_bidi_block(self, html):
+        """Same for an HTML block (company details, footer text)."""
+        if not html or not self.env.context.get('dyn_rtl') or self._dyn_has_rtl(html2plaintext(html)):
+            return html
+        return Markup('<div dir="ltr" style="unicode-bidi: embed; text-align: inherit;">%s</div>') % html
+
+    @staticmethod
+    def _dyn_truncate(text):
+        text = (text or '').strip()
+        return text if len(text) <= MAX_TEXT_LEN else text[:MAX_TEXT_LEN - 1] + '…'
+
+    def _dyn_record_values(self, record, cfgs):
+        """[(label, value)] for header / summary fields of a single record."""
+        res = []
+        for cfg in cfgs:
+            field = record._fields.get(cfg['name'])
+            if field is None or not self._dyn_can_read(record, field):
+                continue
+            try:
+                value = record[cfg['name']]
+            except (AccessError, MissingError):
+                continue
+            except Exception:  # pylint: disable=broad-except
+                _logger.debug('pdf_report_dynamic_design: cannot read %s', cfg['name'], exc_info=True)
+                continue
+            text = self._dyn_format(record, field, value)
+            if text or cfg.get('show_if_empty'):
+                res.append({'label': cfg['label'], 'value': self._dyn_bidi(text)})
+        return res
+
+    @staticmethod
+    def _dyn_extra_only(doc_type, section, cfgs):
+        shown = ODOO_BODY_FIELDS.get(doc_type, {}).get(section, ())
+        return tuple(c for c in cfgs if c['name'] not in shown)
+
+    def _dyn_lines(self, record, doc_type):
+        spec = DOC_TYPES.get(doc_type)
+        if not spec or spec['line_field'] not in record._fields:
+            return None
+        try:
+            lines = record[spec['line_field']]
+            if doc_type == 'stock_picking':
+                lines = lines.filtered(lambda m: m.state != 'cancel')
+            return lines
+        except (AccessError, MissingError):
+            return None
+
+    def _dyn_line_table(self, lines, cfgs, style):
+        """Columns + pre-formatted rows; one query batch per column, not per line."""
+        columns = []
+        for cfg in cfgs:
+            field = lines._fields.get(cfg['name'])
+            if field is None or not self._dyn_can_read(lines, field):
+                continue
+            # Warm the cache for the whole recordset (prefetch, single batch).
+            try:
+                values = lines.mapped(field.name)
+                if field.type in ('many2one', 'many2many') and values:
+                    values.mapped('display_name')
+                if field.type == 'monetary':
+                    cfield = getattr(field, 'currency_field', None) or 'currency_id'
+                    if cfield in lines._fields:
+                        lines.mapped(cfield)
+            except (AccessError, MissingError):
+                continue
+            except Exception:  # pylint: disable=broad-except
+                _logger.debug('pdf_report_dynamic_design: skip column %s', field.name, exc_info=True)
+                continue
+            align = cfg['align']
+            if align == 'auto':
+                align = 'end' if field.type in ('integer', 'float', 'monetary') else 'start'
+            css_align = {'start': style['align_start'], 'end': style['align_end'],
+                         'center': 'center'}[align]
+            columns.append({'label': cfg['label'], 'field': field, 'align': css_align})
+
+        has_display_type = 'display_type' in lines._fields
+        if has_display_type:
+            lines.mapped('display_type')
+        rows = []
+        number = 0
+        for line in lines:
+            dtype = line.display_type if has_display_type else False
+            if dtype in SECTION_TYPES:
+                rows.append({'type': 'section' if dtype == 'line_section' else 'note',
+                             'text': line.name or ''})
+                continue
+            number += 1
+            cells = []
+            for col in columns:
+                try:
+                    value = line[col['field'].name]
+                except Exception:  # pylint: disable=broad-except
+                    value = False
+                cells.append({'v': self._dyn_bidi(self._dyn_format(line, col['field'], value)),
+                              'a': col['align']})
+            rows.append({'type': 'line', 'number': number, 'cells': cells,
+                         'odd': bool(number % 2)})
+        for col in columns:
+            col.pop('field')
+        return columns, rows
+
+    def _dyn_default_title(self, record, doc_type):
+        if doc_type == 'sale_quotation':
+            return _('Quotation')
+        if doc_type == 'sale_order':
+            return _('Sales Order')
+        if doc_type == 'purchase_rfq':
+            return _('Request for Quotation')
+        if doc_type == 'purchase_order':
+            return _('Purchase Order')
+        if doc_type == 'stock_picking':
+            code = record.picking_type_id.code
+            return {'outgoing': _('Delivery Slip'), 'incoming': _('Receipt')}.get(code, _('Transfer'))
+        if doc_type == 'account_invoice':
+            title = getattr(record, 'type_name', False) or _('Invoice')
+            if record.state == 'draft':
+                return _('Draft %s', title)
+            if record.state == 'cancel':
+                return _('Cancelled %s', title)
+            return title
+        return _('Journal Entry')
+
+    def _dyn_partner_markup(self, partner, with_name=True):
+        if not partner:
+            return Markup('')
+        try:
+            bidi = self._dyn_bidi
+            parts = []
+            if with_name:
+                parts.append(Markup('<strong>%s</strong>') % bidi(partner.commercial_company_name
+                                                                   or partner.name or ''))
+                if partner.parent_id and partner.name and partner.name != partner.commercial_company_name:
+                    parts.append(bidi(escape(partner.name)))
+            else:
+                parts.append(Markup('<strong>%s</strong>') % bidi(partner.name or ''))
+            address = partner._display_address(without_company=True) or ''
+            parts += [bidi(escape(l)) for l in address.splitlines() if l.strip()]
+            if partner.phone:
+                parts.append(bidi(escape(partner.phone)))
+            if partner.email:
+                parts.append(bidi(escape(partner.email)))
+            if partner.vat:
+                parts.append(Markup('%s: %s') % (_('Tax ID'), bidi(partner.vat)))
+            return Markup('<br/>').join(parts)
+        except (AccessError, MissingError):
+            return Markup('')
+
+    def _dyn_partners(self, record, doc_type):
+        res = []
+        if 'partner_id' not in record._fields:
+            return res
+        label = {
+            'sale_quotation': _('Customer'), 'sale_order': _('Customer'),
+            'purchase_rfq': _('Vendor'), 'purchase_order': _('Vendor'),
+            'stock_picking': _('Contact'), 'journal_entry': _('Partner'),
+        }.get(doc_type)
+        if doc_type == 'account_invoice':
+            label = _('Vendor') if record.move_type in ('in_invoice', 'in_refund', 'in_receipt') \
+                else _('Customer')
+        partner = record.partner_id
+        if partner:
+            res.append({'label': label, 'html': self._dyn_partner_markup(partner)})
+        second = False
+        if doc_type in ('sale_quotation', 'sale_order') and 'partner_shipping_id' in record._fields:
+            second = record.partner_shipping_id
+        elif doc_type in ('purchase_rfq', 'purchase_order') and 'dest_address_id' in record._fields:
+            second = record.dest_address_id
+        elif doc_type == 'account_invoice' and 'partner_shipping_id' in record._fields:
+            second = record.partner_shipping_id
+        if second and second != partner:
+            res.append({'label': _('Delivery Address'), 'html': self._dyn_partner_markup(second)})
+        return res
+
+    def _dyn_totals(self, record, doc_type, lines):
+        res = []
+        try:
+            if doc_type == 'journal_entry':
+                currency = record.company_id.currency_id
+                if lines:
+                    res.append({'label': _('Total Debit'),
+                                'value': formatLang(self.env, sum(lines.mapped('debit')),
+                                                    currency_obj=currency), 'strong': False})
+                    res.append({'label': _('Total Credit'),
+                                'value': formatLang(self.env, sum(lines.mapped('credit')),
+                                                    currency_obj=currency), 'strong': True})
+                return [dict(i, value=self._dyn_bidi(i['value'])) for i in res]
+            if 'amount_total' not in record._fields:
+                return res
+            currency = record.currency_id if 'currency_id' in record._fields else \
+                record.company_id.currency_id
+            if 'amount_untaxed' in record._fields:
+                res.append({'label': _('Untaxed Amount'),
+                            'value': formatLang(self.env, record.amount_untaxed, currency_obj=currency),
+                            'strong': False})
+            if 'amount_tax' in record._fields:
+                res.append({'label': _('Taxes'),
+                            'value': formatLang(self.env, record.amount_tax, currency_obj=currency),
+                            'strong': False})
+            res.append({'label': _('Total'),
+                        'value': formatLang(self.env, record.amount_total, currency_obj=currency),
+                        'strong': True})
+            if doc_type == 'account_invoice' and record.state == 'posted' and \
+                    record.amount_residual != record.amount_total:
+                res.append({'label': _('Amount Due'),
+                            'value': formatLang(self.env, record.amount_residual, currency_obj=currency),
+                            'strong': False})
+        except (AccessError, MissingError):
+            return []
+        for item in res:
+            item['value'] = self._dyn_bidi(item['value'])
+        return res
+
+    def _dyn_invoice_extras(self, record, field_cfgs):
+        """Blocks of Odoo's invoice body the dynamic body must keep.
+
+        * Payment Communication (the reference customers must quote),
+        * payment terms note,
+        * QR codes: Saudi e-invoice (ZATCA, ``l10n_sa``) and payment QR (SEPA, ...).
+        Each part is optional and never raises.
+        """
+        res = {'payment_ref': False, 'payment_terms': False, 'qr_codes': []}
+        try:
+            shown = {cfg.get('name') for cfg in field_cfgs or ()}
+            if record.move_type in ('out_invoice', 'in_refund') and record.payment_reference \
+                    and 'payment_reference' not in shown:
+                res['payment_ref'] = self._dyn_bidi(record.payment_reference)
+            term = record.invoice_payment_term_id
+            if term and term.note and not is_html_empty(term.note):
+                res['payment_terms'] = Markup(term.note)
+        except (AccessError, MissingError):
+            pass
+        res['qr_codes'] = self._dyn_qr_codes(record)
+        return res
+
+    def _dyn_qr_codes(self, record):
+        codes = []
+        # Saudi Arabia e-invoicing (ZATCA): the QR is mandatory on simplified and
+        # standard tax invoices. ``l10n_sa`` (phase 1) / ``l10n_sa_edi`` (phase 2)
+        # compute the TLV string; we only render it.
+        try:
+            # Odoo 18: l10n_sa prints the QR only on legal documents (posted, Saudi
+            # company; l10n_sa_edi also requires the ZATCA submission to be accepted).
+            legal = record._l10n_sa_is_legal() if hasattr(record, '_l10n_sa_is_legal') else True
+            if 'l10n_sa_qr_code_str' in record._fields and record.l10n_sa_qr_code_str and legal:
+                codes.append({
+                    'src': '/report/barcode/?barcode_type=QR&value=%s&width=200&height=200'
+                           % url_quote_plus(record.l10n_sa_qr_code_str),
+                    'caption': _('E-invoice QR code (ZATCA)'),
+                    'kind': 'zatca',
+                })
+        except Exception:  # pylint: disable=broad-except
+            _logger.debug('pdf_report_dynamic_design: ZATCA QR failed on %s', record, exc_info=True)
+        try:
+            if 'display_qr_code' in record._fields and record.display_qr_code \
+                    and record.amount_residual > 0:
+                url = record._generate_qr_code(silent_errors=True)
+                if url:
+                    codes.append({'src': url, 'caption': _('Scan me with your banking app.'),
+                                  'kind': 'payment'})
+        except Exception:  # pylint: disable=broad-except
+            _logger.debug('pdf_report_dynamic_design: payment QR failed on %s', record, exc_info=True)
+        # Odoo 19: online payment link QR ("Pay in a flash!").
+        try:
+            if 'display_link_qr_code' in record._fields and record.display_link_qr_code \
+                    and record.amount_residual and hasattr(record, '_generate_portal_payment_qr'):
+                url = record._generate_portal_payment_qr()
+                if url:
+                    codes.append({'src': url, 'kind': 'payment_link',
+                                  'caption': _('Pay in a flash! Scan the QR code to pay online.')})
+        except Exception:  # pylint: disable=broad-except
+            _logger.debug('pdf_report_dynamic_design: payment link QR failed on %s', record,
+                          exc_info=True)
+        return codes
+
+    def _dyn_zatca_banner(self, record):
+        """Odoo 18 l10n_sa prints "THIS IS NOT A LEGAL DOCUMENT" (English + Arabic) on
+        Saudi customer invoices that are not legal yet (draft, or rejected by ZATCA).
+        Odoo puts it in the header of its own layouts; ours print it above the body.
+        """
+        try:
+            if record is None or record._name != 'account.move' \
+                    or not hasattr(record, '_l10n_sa_is_legal') \
+                    or record.company_id.country_id.code != 'SA' \
+                    or not record.is_sale_document() or record._l10n_sa_is_legal():
+                return False
+        except Exception:  # pylint: disable=broad-except
+            return False
+        # Bilingual on purpose (fixed legal wording, never translated).
+        return Markup('<div>THIS IS NOT A LEGAL DOCUMENT</div>'
+                      '<div dir="rtl">هذا المستند ليس مستنداً قانونياً</div>')
+
+    def _dyn_zatca_footer(self, record):
+        """ZATCA issue date that ``l10n_sa`` prints in the footer of Odoo's layouts."""
+        try:
+            if record is None or 'l10n_sa_confirmation_datetime' not in record._fields \
+                    or not record.l10n_sa_confirmation_datetime \
+                    or not hasattr(record, 'get_l10n_sa_confirmation_datetime_sa_tz'):
+                return False
+            text = record.get_l10n_sa_confirmation_datetime_sa_tz() or ''
+            return self._dyn_bidi(' '.join(text.split())) if text else False
+        except Exception:  # pylint: disable=broad-except
+            return False
+
+    def _dyn_notes(self, record):
+        for fname in ('note', 'notes', 'narration'):
+            if fname in record._fields and record._fields[fname].type in ('html', 'text'):
+                try:
+                    value = record[fname]
+                except (AccessError, MissingError):
+                    return False
+                if not value or is_html_empty(value):
+                    return False
+                if record._fields[fname].type == 'text':
+                    return Markup('<br/>').join(escape(l) for l in value.splitlines())
+                return Markup(value)
+        return False
+
+    # ======================================================================
+    # CSS (concrete values: wkhtmltopdf does not support CSS variables)
+    # ======================================================================
+    @api.model
+    def _dyn_css(self, ctx):
+        s = ctx['style']
+        sc = '.' + s['scope']
+        rules = [
+            "%(sc)s{color:%(text)s;font-family:%(font)s;font-size:%(size)spt;direction:%(dir)s;"
+            "text-align:%(start)s;}",
+            "%(sc)s .dyn-title{color:%(primary)s;font-size:1.9em;font-weight:bold;margin:0;"
+            "line-height:1.15;}",
+            # Odoo 18 standard bodies: title printed by the layout (layout_document_title).
+            "%(sc)s h2.dyn-doc-title{color:%(primary)s;font-weight:bold;margin:2mm 0 4mm;}",
+            "%(sc)s .dyn-docname{color:%(accent)s;font-size:1.15em;font-weight:bold;}",
+            "%(sc)s .dyn-bar{height:3px;background-color:%(accent)s;margin:4px 0 10px 0;}",
+            "%(sc)s .dyn-panel{background-color:%(surface)s;border:1px solid %(border)s;"
+            "border-radius:4px;padding:6px 9px;}",
+            "%(sc)s .dyn-label{color:%(accent)s;font-size:0.82em;font-weight:bold;}",
+            "%(sc)s .dyn-value{color:%(text)s;}",
+            "%(sc)s table.dyn-grid{width:100%%;border-collapse:separate;border-spacing:6px 0;"
+            "margin:0 -6px 10px -6px;}",
+            "%(sc)s table.dyn-grid td{vertical-align:top;}",
+            "%(sc)s table.dyn-lines{width:100%%;border-collapse:collapse;margin-bottom:10px;}",
+            "%(sc)s table.dyn-lines th{background-color:%(primary)s;color:%(on_primary)s;"
+            "padding:%(pad)s;font-weight:bold;border:0;}",
+            "%(sc)s table.dyn-lines td{padding:%(pad)s;border-bottom:1px solid %(border)s;"
+            "vertical-align:top;}",
+            "%(sc)s table.dyn-lines tr{page-break-inside:avoid;}",
+            "%(sc)s table.dyn-lines thead{display:table-header-group;}",
+            "%(sc)s tr.dyn-section td{background-color:%(surface)s;color:%(primary)s;"
+            "font-weight:bold;border-bottom:2px solid %(accent)s;}",
+            "%(sc)s tr.dyn-note td{font-style:italic;color:%(accent)s;}",
+            "%(sc)s table.dyn-totals{border-collapse:collapse;width:100%%;}",
+            "%(sc)s table.dyn-totals td{padding:%(pad)s;border-bottom:1px solid %(border)s;}",
+            "%(sc)s table.dyn-totals tr.dyn-strong td{background-color:%(primary)s;"
+            "color:%(on_primary)s;font-weight:bold;border:0;}",
+            "%(sc)s .dyn-sign{border-top:1px solid %(border)s;padding-top:4px;color:%(accent)s;}",
+            "%(sc)s .dyn-muted{color:%(accent)s;}",
+            "%(sc)s .dyn-soft{color:%(soft)s;}",
+            "%(sc)s .dyn-primary-bg{background-color:%(primary)s;color:%(on_primary)s;}",
+            "%(sc)s .dyn-primary-bg .dyn-title,%(sc)s .dyn-primary-bg .dyn-docname"
+            "{color:%(on_primary)s;}",
+            "%(sc)s .dyn-accent-border{border-color:%(accent)s;}",
+            "%(sc)s .dyn-rule{border-top:1px solid %(border)s;}",
+            "%(sc)s img.dyn-logo{max-height:%(logo_h)smm;max-width:60mm;}",
+            "%(sc)s img.dyn-deco{border:0;}",
+            # Arrangement blocks (all layouts)
+            "%(sc)s .dyn-section-head{color:%(primary)s;font-weight:bold;text-transform:uppercase;"
+            "font-size:1.05em;margin-bottom:3px;}",
+            "%(sc)s table.dyn-kv{border-collapse:separate !important;border-spacing:0 1px;}",
+            "%(sc)s table.dyn-kv td{padding:3px 6px !important;vertical-align:top;}",
+            "%(sc)s table.dyn-kv td.dyn-kv-label{font-weight:bold;white-space:nowrap;width:1%%;}",
+            "%(sc)s table.dyn-kv td.dyn-kv-sep{width:10px;padding:3px 2px !important;color:%(accent)s;"
+            "text-align:center;}",
+            "%(sc)s table.dyn-strip{width:100%%;border-collapse:separate !important;"
+            "border-spacing:4px 0;margin:0 -4px 12px -4px;}",
+            "%(sc)s table.dyn-strip td{text-align:center;padding:6px 6px !important;vertical-align:top;"
+            "background-color:%(surface)s;border:1px solid %(border)s !important;}",
+            "%(sc)s .dyn-strip-label{font-weight:bold;text-transform:uppercase;font-size:0.8em;"
+            "color:%(accent)s;}",
+            "%(sc)s table.dyn-fromto{margin-bottom:14px !important;}",
+            "%(sc)s table.dyn-fromto td{padding:0 6px 4px 0;vertical-align:top;}",
+            "%(sc)s .dyn-block-gap{height:4mm;}",
+            # wkhtmltopdf (old WebKit) draws Bootstrap's "border-style: solid; border-width: 0"
+            # on tbody/tr/td as hairlines: neutralize the style, not only the width.
+            "%(sc)s table.dyn-plain,%(sc)s table.dyn-plain>thead,%(sc)s table.dyn-plain>tbody,"
+            "%(sc)s table.dyn-plain>tbody>tr,%(sc)s table.dyn-grid,%(sc)s table.dyn-grid>tbody,"
+            "%(sc)s table.dyn-grid>tbody>tr,%(sc)s table.dyn-kv,%(sc)s table.dyn-kv>tbody,"
+            "%(sc)s table.dyn-kv>tbody>tr,%(sc)s table.dyn-strip,%(sc)s table.dyn-strip>tbody,"
+            "%(sc)s table.dyn-strip>tbody>tr,%(sc)s table.dyn-totals,%(sc)s table.dyn-totals>tbody,"
+            "%(sc)s table.dyn-totals>tbody>tr,%(sc)s table.dyn-lines,%(sc)s table.dyn-lines>thead,"
+            "%(sc)s table.dyn-lines>tbody,%(sc)s table.dyn-lines>thead>tr,%(sc)s table.dyn-lines>tbody>tr"
+            "{border-style:none !important;border-width:0 !important;}",
+            "%(sc)s table.dyn-plain,%(sc)s table.dyn-grid,%(sc)s table.dyn-kv"
+            "{border-collapse:separate !important;}",
+            "%(sc)s table.dyn-plain{border-spacing:0 !important;}",
+            ".o_dyn_header thead,.o_dyn_header tbody,.o_dyn_header tfoot,.o_dyn_footer thead,"
+            ".o_dyn_footer tbody,.o_dyn_footer tfoot{border-style:none !important;border-width:0 !important;}",
+            # Header / footer: never inherit stray borders from other report CSS
+            ".o_dyn_header,.o_dyn_footer{border:0 !important;outline:0 !important;}",
+            ".o_dyn_header table,.o_dyn_header tr,.o_dyn_header td,.o_dyn_footer table,"
+            ".o_dyn_footer tr,.o_dyn_footer td{border-top:0 !important;border-bottom:0 !important;"
+            "border-left:0 !important;border-right:0 !important;box-shadow:none !important;}",
+            ".o_dyn_header .dyn-band,.o_dyn_footer .dyn-band{padding:0 1.5mm;}",
+            "%(sc)s img.dyn-logo-compact{max-height:11mm;max-width:45mm;}",
+            "%(sc)s .dyn-bar-lines{display:none;}",
+            "%(sc)s img.dyn-flip{-webkit-transform:scaleX(-1);transform:scaleX(-1);}",
+            "%(sc)s img.dyn-logo-stacked{max-height:%(logo_stacked_h)smm;max-width:50mm;}",
+            "%(sc)s table.dyn-plain,%(sc)s table.dyn-plain td,%(sc)s table.dyn-plain th,"
+            "%(sc)s table.dyn-grid,%(sc)s table.dyn-grid td"
+            "{border:0 !important;background-color:transparent;}",
+            "%(sc)s table.dyn-lines td,%(sc)s table.dyn-lines th,%(sc)s table.dyn-totals td"
+            "{border-left:0 !important;"
+            "border-right:0 !important;border-top:0 !important;}",
+        ]
+        if s.get('zebra'):
+            rules.append("%(sc)s table.dyn-lines tr.dyn-odd td{background-color:%(surface)s;}")
+        values = {
+            'sc': sc, 'text': s['text'], 'font': s['font_family'], 'size': s['font_size'],
+            'dir': s['direction'], 'start': s['align_start'], 'primary': s['primary'],
+            'accent': s['accent'], 'surface': s['surface'], 'border': s['border'],
+            'on_primary': s['on_primary'], 'pad': s['padding'],
+            'soft': mix(s['text'], '#FFFFFF', 0.3),
+            'logo_h': max(8.0, ctx['header']['height'] - 6.0),
+            'logo_stacked_h': max(6.0, round(ctx['header']['height'] * 0.38, 1)),
+        }
+        # All interpolated values are sanitized (colors, font names, numbers).
+        css = ''.join(rule % values for rule in rules)
+        css += design_css(ctx.get('design'), s, sc)
+        css += table_css(ctx.get('table_style'), s, sc)
+        return Markup(css)

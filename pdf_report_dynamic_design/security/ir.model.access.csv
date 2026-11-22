@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pdf_design_profile_user,pdf.design.profile user,model_pdf_design_profile,base.group_user,1,0,0,0
+access_pdf_design_profile_admin,pdf.design.profile admin,model_pdf_design_profile,base.group_system,1,1,1,1
+access_pdf_design_field_user,pdf.design.field user,model_pdf_design_field,base.group_user,1,0,0,0
+access_pdf_design_field_admin,pdf.design.field admin,model_pdf_design_field,base.group_system,1,1,1,1
+access_pdf_design_font_rule_user,pdf.design.font.rule user,model_pdf_design_font_rule,base.group_user,1,0,0,0
+access_pdf_design_font_rule_admin,pdf.design.font.rule admin,model_pdf_design_font_rule,base.group_system,1,1,1,1
