@@ -1,0 +1,213 @@
+<!-- Odoo Apps description page for pdf_report_dynamic_design (Odoo 18.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
+<section style="max-width:1120px;margin:0 auto;padding:0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#2b2b33;">
+
+<!-- ============================== HERO ============================== -->
+<div style="background:linear-gradient(120deg,#017E84 0%,#3d6b78 45%,#714B67 100%);border-radius:18px;padding:48px 40px 40px;color:#ffffff;margin-top:12px;">
+  <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:10px;">Sales &middot; Purchase &middot; Inventory &middot; Accounting &middot; Reporting</div>
+  <h1 style="font-size:40px;line-height:1.15;font-weight:700;margin:0 0 14px;color:#ffffff;">PDF Report Dynamic Design</h1>
+  <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">Bring a modern &ldquo;Configure your document layout&rdquo; experience to Odoo&nbsp;18: pick a layout, a table style and a font, then give every quotation, order, RFQ, transfer, invoice and journal entry its own design with the fields you choose &ndash; custom fields and Arabic included.</p>
+  <div>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 18.0</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Community &amp; Enterprise</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">English &amp; Arabic (RTL)</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">30 automated tests</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Technical name: pdf_report_dynamic_design</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">LGPL-3</span>
+  </div>
+</div>
+
+<!-- ============================== KEY NUMBERS ============================== -->
+<div style="display:flex;flex-wrap:wrap;margin:28px -8px 8px;">
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">15 layouts</div><div style="font-size:15px;color:#555;">8 modern style layouts + 7 template designs</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">7 table styles</div><div style="font-size:15px;color:#555;">Chosen separately from the layout</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">7 documents</div><div style="font-size:15px;color:#555;">Each with its own design, fields and fallback to the company</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">Flat SQL</div><div style="font-size:15px;color:#555;">Same query count for 3 lines or 40 &ndash; tested</div></div>
+</div>
+
+<!-- ============================== WHY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Why this module</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Standard Odoo&nbsp;18 lets you pick one layout and two colors for every document of the company. Anything more means Studio (Enterprise) or XML.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #f1d6d6;background:#fff8f8;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 18</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li><b>Seven layouts</b> (Light, Boxed, Bold, Striped, Folder, Wave, Bubble); the table look is tied to the layout.</li>
+      <li><b>One layout for all documents</b>: a quotation and a delivery slip look the same.</li>
+      <li>Adding a field &ndash; even your own <b>custom field</b> &ndash; to a PDF needs Studio or XML.</li>
+      <li><b>One font per company</b>: Arabic text falls back to whatever the server has.</li>
+      <li>Only <b>primary and secondary</b> colors.</li>
+      <li>A tall logo or long address can <b>overlap the body</b>: margins come from the paper format, not from the header.</li>
+    </ul>
+  </div>
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #cfe7e7;background:#f4fbfb;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#017E84;margin:0 0 12px;">With this module</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li><b>15 layouts</b> and <b>7 table styles</b>, picked separately with modern style buttons.</li>
+      <li><b>One design per document type</b>, with every option falling back to the company default.</li>
+      <li>Users pick <b>header, line and summary fields</b> from a list &ndash; custom <code>x_</code> fields included.</li>
+      <li><b>Font per language</b> (Tajawal for Arabic by default), right-to-left direction and a bundled fallback font.</li>
+      <li><b>Surface and border colors</b> and 13 ready-made palettes.</li>
+      <li>Page margins are <b>computed from the header and footer heights</b>, so they never overlap the body.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== HOW IT WORKS ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">How it works</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">No code, no Studio. Documents without a design simply keep the company layout.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;">
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">1</div><div style="font-weight:700;margin-bottom:4px;">Choose the look</div><div style="font-size:14px;color:#555;">In <b>Configure Document Layout</b> pick Layout, Tables, Text and colors. The preview updates live.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">2</div><div style="font-weight:700;margin-bottom:4px;">Design a document</div><div style="font-size:14px;color:#555;">Optionally create a design for a document type: its own layout, table style, colors, header and footer.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">3</div><div style="font-weight:700;margin-bottom:4px;">Pick the fields</div><div style="font-size:14px;color:#555;">Header fields, line columns and summary fields, in your order, with your labels in each language.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #cfe7e7;background:#f4fbfb;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#017E84;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">4</div><div style="font-weight:700;margin-bottom:4px;">Print</div><div style="font-size:14px;color:#555;">Every PDF uses the design in the customer&rsquo;s language, font and text direction.</div></div>
+</div>
+
+<!-- ============================== FEATURES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:44px 0 6px;color:#2b2b33;">Features</h2>
+<p style="font-size:16px;color:#555;margin:0 0 6px;">Screenshots were taken on a test database with a demo company, <b>Nova Office Trading Co.</b> (Riyadh), quotation <b>S00059</b> for Al&nbsp;Noor Interiors (8 lines with sections, a custom <b>Project Code</b> and a custom <b>Line Note</b> field) and its Arabic twin <b>S00060</b>. All PDFs are the module&rsquo;s real output.</p>
+
+<!-- Menus -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Menus</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Everything in Settings</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Settings &rsaquo; PDF Designs &rsaquo; Document Designs</b> and <b>Fonts per Language</b>; company defaults in <b>Settings &rsaquo; General Settings &rsaquo; Configure Document Layout</b> and in the company form, tab <b>PDF Design</b>.</p>
+  <img src="pdd_08_designs_list.png" alt="PDF Designs menu and the list of document designs" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 1 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 1</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">A modern style document layout dialog, in Odoo 18</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Layout</b>, <b>Tables</b> and <b>Text</b> are picked as buttons, with a live preview. Picking a template design also applies its matching palette and header/footer heights. Below: <b>Color Palette</b>, <b>Surface Color</b>, <b>Border Color</b>, <b>Table Density</b>, <b>Striped Lines</b> and the header and footer switches.</p>
+  <img src="pdd_01_document_layout.png" alt="Configure your document layout with Layout, Tables and Text buttons and live preview" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
+  <img src="pdd_02_document_layout_controls.png" alt="Surface and border colors, table density, header and footer controls" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 2 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 2</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Eight modern style layouts</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Light, Bubble, Wave, Folder, Center, Dual, Lines</b> and <b>Compact</b>. Shapes (bubbles, waves, folder tab) are drawn in your own colors and mirror automatically for right-to-left documents.</p>
+  <img src="pdd_03_layouts_odoo20.png" alt="The same quotation printed with the eight modern style layouts" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 3 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 3</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Seven template designs</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Banner, Teal Block, Accent Strip, Angled, Chevron, Swoosh</b> and <b>Geometric</b> &ndash; classic quotation templates with title banners, From/To blocks, field strips and thank-you footers. Each one also arranges the document body its own way.</p>
+  <img src="pdd_04_layouts_templates.png" alt="Template designs Banner, Teal Block, Accent Strip, Angled, Chevron, Swoosh, Geometric and an Arabic Chevron quotation" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 4 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 4</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Table styles, independent of the layout</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Light, Boxed, Bold, Striped, Bubble, Column</b> and <b>Compact</b>, plus <b>Layout Default</b>. The style applies to the module&rsquo;s lines table and to Odoo&rsquo;s own report tables, at company level or per document.</p>
+  <img src="pdd_05_tables.png" alt="The seven table styles on the same quotation lines" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 5 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 5</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">One design per document type</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">For <b>Sales Quotation, Sales Order, Request for Quotation, Purchase Order, Transfer / Delivery Slip, Invoice / Bill</b> and <b>Journal Entry</b> (a new <b>Journal Entry (PDF)</b> report is included). Each design sets its <b>Layout</b>, <b>Body Mode</b>, <b>Tables</b>, density, colors, header and footer &ndash; every option can stay on <b>Company Default</b>. <b>Preview PDF</b> prints the latest document of that type.</p>
+  <img src="pdd_09_design_form.png" alt="Document design form: document type, layout, body mode and table style" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
+  <img src="pdd_13_documents.png" alt="Sales order, RFQ, purchase order, delivery slip, journal entry and a standard-body quotation, each with its own design" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="font-size:13px;color:#777;margin:6px 0 0;">Last card: <b>Standard Odoo body + selected fields</b> keeps Odoo&rsquo;s own body and adds only what Odoo does not print already (here the custom Project Code and Line Note) &ndash; nothing is printed twice.</div>
+</div>
+
+<!-- Feature 6 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 6</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Choose the fields &ndash; custom fields included</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Tabs <b>Header Fields</b>, <b>Line Columns</b> and <b>Summary Fields</b>: drag to reorder, rename with a translatable <b>Label</b>, align columns, and pick any field of the document &ndash; fields added by other apps or created as <code>x_</code> custom fields appear in the same list. <b>Reset Fields to Defaults</b> reloads a sensible starting set.</p>
+  <img src="pdd_10_header_fields.png" alt="Header fields including the custom Project Code field" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
+  <img src="pdd_12_field_picker.png" alt="Line columns with the field picker searching for price fields" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Values are formatted for you:</b> amounts with the document currency, dates in the language&rsquo;s format, date-times without seconds, selection labels and many2one names translated, many2many joined. A field the user may not read, or that was removed, is skipped &ndash; the PDF still prints.</div>
+</div>
+
+<!-- Feature 7 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 7</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">A dynamic body built from your choices</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">With <b>Body Mode &rsaquo; Dynamic body</b> the module renders the title, customer and delivery address, your header fields, the line columns with sections and notes, the totals, notes/terms and optional <b>Signature Boxes</b>. Shown: <b>Light</b> layout with <b>Bold</b> tables.</p>
+  <img src="pdd_06_quotation_en.png" alt="English quotation S00059 with custom Project Code and Line Note fields" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- Feature 8 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 8</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Arabic and every activated language</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Each PDF follows the customer&rsquo;s language: right-to-left direction, mirrored layout and shapes, translated titles and labels. <b>Fonts per Language</b> sets the font, direction and size per language and optionally per document; <b>Add Rules for Active Languages</b> creates them in one click. Numbers, amounts, phone numbers and Latin names are isolated so they are never scrambled inside Arabic text.</p>
+  <img src="pdd_07_quotation_ar.png" alt="Arabic quotation S00060 in the Chevron design" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);margin-bottom:22px;"/>
+  <img src="pdd_14_fonts.png" alt="Fonts per Language: Tajawal for Arabic, Lato for English and French" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="font-size:13px;color:#777;margin:6px 0 0;">Fonts: Lato, Roboto, Open Sans, Montserrat, Oswald, Raleway, Tajawal, a bundled multi-script DejaVu Sans, server fonts (Noto Naskh Arabic, Noto Kufi Arabic, Amiri, Cairo) or any custom server font.</div>
+</div>
+
+<!-- Feature 9 -->
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 9</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Company defaults, header and footer control</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The company tab <b>PDF Design</b> holds the defaults every design falls back to: colors, <b>Tables</b>, density, line numbers, font size, header (logo, company details, tagline, alignment, height, spacing) and footer (page numbers, footer text, thank-you line, height, <b>Auto Page Margins</b>).</p>
+  <img src="pdd_15_company_tab.png" alt="Company form, PDF Design tab with colors, tables, header, footer and fonts" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>No overlap, by construction:</b> the top page margin is computed as <b>5&nbsp;mm + header height + spacing</b> and the bottom margin as <b>footer height + 4&nbsp;mm</b>, and both are passed to wkhtmltopdf. Example: a 32&nbsp;mm header with 5&nbsp;mm spacing gives a 42&nbsp;mm top margin, whatever the paper format says. Short layouts such as <b>Compact</b> bring their own, smaller heights.</div>
+</div>
+
+<!-- ============================== CORNER CASES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:44px 0 6px;color:#2b2b33;">Built for real-world corner cases</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Found and fixed while printing real documents in English and Arabic.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;font-size:15px;line-height:1.55;">
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Country invoice templates</b><br/><span style="color:#555;">Templates the module does not hook (for example the Saudi bilingual tax invoice) keep their body and still get the document&rsquo;s layout, header, footer and table style.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Saudi e-invoicing (ZATCA)</b><br/><span style="color:#555;">With the Saudi localization installed, the ZATCA QR code and the issue date are printed on invoices in every layout, including the dynamic invoice body. The payment QR code and Payment Communication are kept too.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Missing or restricted fields</b><br/><span style="color:#555;">A removed custom field, a field reserved to another group or an unreadable record is skipped; if anything else fails the PDF falls back to Odoo&rsquo;s normal output.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Long documents</b><br/><span style="color:#555;">Table headers repeat on every page, rows never split, and header/footer margins hold on page 2 and beyond.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>No duplicate information</b><br/><span style="color:#555;">In <b>Standard Odoo body</b> mode, fields Odoo already prints are left out automatically.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Mixed Arabic and Latin text</b><br/><span style="color:#555;">Amounts, phone numbers, codes and Latin names are isolated inside right-to-left blocks.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Multi-company</b><br/><span style="color:#555;">Designs and font rules belong to a company; one active design per company and document type.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Old wkhtmltopdf engine</b><br/><span style="color:#555;">No CSS variables or flexbox; shapes are SVG; stray Bootstrap hairlines around tables are neutralized.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Safe colors and fonts</b><br/><span style="color:#555;">Colors are validated as <code>#RRGGBB</code> and font names sanitized before they reach the PDF style sheet.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Existing layouts kept</b><br/><span style="color:#555;">Odoo&rsquo;s legacy layouts are hidden from the picker but keep working for companies using them; uninstalling shows them again.</span></div>
+</div>
+
+<!-- ============================== SECURITY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:44px 0 6px;color:#2b2b33;">Security</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Designing is an administrator task; printing works for everyone who can open the document.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <thead><tr style="background:#714B67;color:#fff;"><th style="text-align:left;padding:10px 14px;">Who</th><th style="text-align:left;padding:10px 14px;">Can</th></tr></thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Administration / Settings</td><td style="padding:10px 14px;">Create and edit document designs, fields and font rules; use the <b>PDF Designs</b> menu and the company <b>PDF Design</b> tab.</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Internal users</td><td style="padding:10px 14px;">Read designs so their PDFs print with them; fields they are not allowed to read are left out of their PDFs.</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Multi-company</td><td style="padding:10px 14px;">Record rules limit designs and font rules to the user&rsquo;s allowed companies.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== TECHNICAL ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:44px 0 6px;color:#2b2b33;">Technical details</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Non-invasive: QWeb view inheritance and model extensions only, no Odoo core file touched.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">18.0, Community and Enterprise</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Depends on</td><td style="padding:10px 14px;"><code>web</code>, <code>sale</code>, <code>purchase</code>, <code>stock</code>, <code>account</code></td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Python dependency</td><td style="padding:10px 14px;">None</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Menus</td><td style="padding:10px 14px;">Settings &rsaquo; PDF Designs &rsaquo; Document Designs &middot; Fonts per Language</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Settings</td><td style="padding:10px 14px;">Settings &rsaquo; General Settings &rsaquo; Configure Document Layout &middot; Companies &rsaquo; tab PDF Design</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Reports covered</td><td style="padding:10px 14px;">Quotation / Order, RFQ, Purchase Order, Delivery Slip, Picking Operations, Invoices &amp; Bills, Journal Entry (new) &ndash; plus the layout of any report using the standard external layout</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Models</td><td style="padding:10px 14px;"><code>pdf.design.profile</code>, <code>pdf.design.field</code>, <code>pdf.design.font.rule</code>, <code>pdf.design.engine</code>; extends <code>res.company</code>, <code>base.document.layout</code>, <code>report.layout</code>, <code>ir.actions.report</code></td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Performance</td><td style="padding:10px 14px;">Designs cached per company, document type and language; line values read column by column on the whole recordset</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">30 <code>TransactionCase</code> tests: all reports and layouts, custom fields, Arabic/RTL fonts, direction and dates, settings validation, payment communication, Saudi ZATCA QR code, fallbacks and failure safety, margins, duplicates, country templates, cache and SQL query-count bounds</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Languages</td><td style="padding:10px 14px;">English, Arabic</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">License</td><td style="padding:10px 14px;">LGPL-3</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== CONTACT ============================== -->
+<div style="margin:52px 0 40px;background:linear-gradient(120deg,#714B67 0%,#017E84 100%);border-radius:18px;padding:36px 40px;color:#fff;">
+  <h2 style="font-size:26px;font-weight:700;margin:0 0 8px;color:#fff;">Support &amp; customization</h2>
+  <p style="font-size:16px;line-height:1.6;margin:0 0 20px;color:#fff;opacity:.95;">Questions, a demo, or an adaptation to your own process? Get in touch.</p>
+  <a href="mailto:ibrahim.yahiah@gmail.com" style="display:inline-block;background:#fff;color:#714B67;font-weight:700;text-decoration:none;border-radius:8px;padding:12px 22px;margin:0 12px 10px 0;">&#9993;  ibrahim.yahiah@gmail.com</a>
+  <a href="https://www.linkedin.com/in/ibrahim-yahia" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #fff;color:#fff;font-weight:700;text-decoration:none;border-radius:8px;padding:10px 22px;margin:0 0 10px 0;">LinkedIn: Ibrahim Yahia</a>
+  <p style="font-size:13px;margin:14px 0 0;opacity:.8;color:#fff;">Author: Ibrahim Yahia &middot; License: LGPL-3</p>
+</div>
+
+</section>
