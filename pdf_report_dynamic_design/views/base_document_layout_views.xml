@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_base_document_layout_pdf_design" model="ir.ui.view">
+        <field name="name">base.document.layout.form.pdf.design</field>
+        <field name="model">base.document.layout</field>
+        <field name="inherit_id" ref="web.view_base_document_layout"/>
+        <field name="arch" type="xml">
+            <!-- Odoo 20 style pickers: Layout / Tables / Text as badges -->
+            <xpath expr="//field[@name='report_layout_id']" position="attributes">
+                <attribute name="widget">selection_badge</attribute>
+                <attribute name="string">Layout</attribute>
+                <attribute name="domain">[('dyn_hidden', '=', False)]</attribute>
+                <attribute name="options">{'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='report_layout_id']" position="after">
+                <field name="dyn_table_style" widget="selection_badge" string="Tables"/>
+            </xpath>
+            <xpath expr="//field[@name='font']" position="attributes">
+                <attribute name="widget">selection_badge</attribute>
+                <attribute name="string">Text</attribute>
+            </xpath>
+            <xpath expr="//field[@name='font']" position="after">
+                <field name="dyn_palette"/>
+                <field name="dyn_surface_color" widget="color"/>
+                <field name="dyn_border_color" widget="color"/>
+                <field name="dyn_density"/>
+                <field name="dyn_zebra"/>
+                <field name="dyn_show_header"/>
+                <field name="dyn_header_show_logo" invisible="not dyn_show_header"/>
+                <field name="dyn_header_show_details" invisible="not dyn_show_header"/>
+                <field name="dyn_header_align" invisible="not dyn_show_header"/>
+                <field name="dyn_header_height" invisible="not dyn_show_header"/>
+                <field name="dyn_show_footer"/>
+                <field name="dyn_footer_show_page_number" invisible="not dyn_show_footer"/>
+                <field name="dyn_footer_height" invisible="not dyn_show_footer"/>
+                <field name="dyn_footer_thanks" invisible="not dyn_show_footer"/>
+                <field name="dyn_header_show_tagline" invisible="1"/>
+                <field name="dyn_header_spacing" invisible="1"/>
+                <field name="dyn_footer_show_details" invisible="1"/>
+                <field name="dyn_auto_margins" invisible="1"/>
+                <field name="dyn_text_color" invisible="1"/>
+                <field name="dyn_show_line_numbers" invisible="1"/>
+                <field name="dyn_base_font_size" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
