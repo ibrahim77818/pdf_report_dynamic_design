@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_pdf_design_root" name="PDF Designs" parent="base.menu_administration"
+              sequence="45" groups="base.group_system"/>
+    <menuitem id="menu_pdf_design_profile" name="Document Designs" parent="menu_pdf_design_root"
+              action="action_pdf_design_profile" sequence="10"/>
+    <menuitem id="menu_pdf_design_font_rule" name="Fonts per Language" parent="menu_pdf_design_root"
+              action="action_pdf_design_font_rule" sequence="20"/>
+</odoo>
