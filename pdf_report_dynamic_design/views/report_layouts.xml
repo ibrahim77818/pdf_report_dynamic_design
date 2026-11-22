@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Dynamic external layouts. They behave like web.external_layout_* (header /
+        article / footer) and are listed in "Configure Document Layout".
+        Tables are used instead of flexbox: wkhtmltopdf runs an old WebKit.
+    -->
+
+    <!-- ===== shared: header content ===== -->
+    <template id="dyn_header_content">
+        <t t-set="h" t-value="dyn['header']"/>
+        <t t-set="st" t-value="dyn['style']"/>
+        <t t-set="h_align" t-value="'center' if dyn_variant == 'elegant' else h['align']"/>
+        <table t-if="h_align == 'split'" class="dyn-plain" style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td t-attf-style="width: 45%; vertical-align: middle; padding: 0 2mm; text-align: {{st['align_start']}};">
+                    <span t-if="h['logo'] and dyn_on_primary" style="display: inline-block; background-color: #FFFFFF; padding: 1.5mm 2.5mm; border-radius: 2mm;">
+                        <img t-att-src="h['logo']" class="dyn-logo-stacked" alt="Logo"/>
+                    </span>
+                    <img t-elif="h['logo']" t-att-src="h['logo']" class="dyn-logo" alt="Logo"/>
+                    <div t-if="not h['logo']" class="dyn-title" t-out="h['name']"/>
+                </td>
+                <td t-attf-style="vertical-align: middle; padding: 0 2mm; text-align: {{st['align_end']}};">
+                    <div t-if="h['tagline']" class="dyn-docname" style="margin-bottom: 2px;" t-out="h['tagline']"/>
+                    <div t-if="h['details']" t-att-class="'' if dyn_on_primary else 'dyn-muted'"
+                         style="font-size: 0.85em; line-height: 1.3;" t-out="h['details']"/>
+                </td>
+            </tr>
+        </table>
+        <t t-else="">
+            <t t-set="h_css_align" t-value="{'start': st['align_start'], 'end': st['align_end']}.get(h_align, 'center')"/>
+            <div t-attf-style="text-align: {{h_css_align}};">
+                <img t-if="h['logo']" t-att-src="h['logo']" class="dyn-logo-stacked" alt="Logo"/>
+                <div t-if="not h['logo']" class="dyn-title"
+                     style="font-size: 1.35em; letter-spacing: 1px;" t-out="h['name']"/>
+                <div t-if="h['tagline']" class="dyn-docname" t-out="h['tagline']"/>
+                <div t-if="h['details']" t-att-class="'' if dyn_on_primary else 'dyn-muted'"
+                     style="font-size: 0.78em; line-height: 1.2; margin-top: 2px;" t-out="h['details']"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- ===== shared: header wrapper (margins live here) ===== -->
+    <template id="dyn_header_wrapper">
+        <t t-set="m" t-value="dyn['margins']"/>
+        <div t-attf-class="header o_dyn_header {{dyn['style']['scope']}}"
+             t-att-dir="dyn['direction']"
+             t-att-data-dyn-margin-top="m['top'] if m['auto'] else None"
+             t-att-data-dyn-header-spacing="m['spacing'] if m['auto'] else None"
+             t-att-data-dyn-margin-bottom="m['bottom'] if m['auto'] else None">
+            <style t-out="dyn['css']"/>
+            <div class="dyn-band" t-attf-style="max-height: {{dyn['header']['height']}}mm; overflow: hidden;">
+                <t t-if="dyn['header']['show']" t-out="0"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- ===== shared: footer ===== -->
+    <template id="dyn_footer_content">
+        <t t-set="f" t-value="dyn['footer']"/>
+        <t t-set="st" t-value="dyn['style']"/>
+        <table class="dyn-plain" style="width: 100%; border-collapse: collapse; font-size: 0.8em;">
+            <tr>
+                <td t-attf-style="vertical-align: top; text-align: {{'center' if dyn_variant in ('elegant', 'v20_light', 'v20_center') else st['align_start']}};">
+                    <div t-if="f['details']" t-out="f['details']"/>
+                    <div t-if="f['text']" t-out="f['text']"/>
+                    <!-- Legal footer line of localizations (l10n_sa: ZATCA issue date). -->
+                    <t t-set="dyn_legal" t-value="f.get('legal') or additional_footer_text"/>
+                    <div t-if="dyn_legal and report_type == 'pdf'" class="dyn-legal" t-out="dyn_legal"/>
+                </td>
+                <td t-if="f['page_number'] and report_type == 'pdf'"
+                    t-attf-style="vertical-align: top; width: 22%; white-space: nowrap; text-align: {{st['align_end']}};">
+                    <span>Page</span> <span class="page"/> / <span class="topage"/>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="dyn_footer_wrapper">
+        <div t-attf-class="footer o_dyn_footer {{dyn['style']['scope']}}" t-att-dir="dyn['direction']">
+            <style t-out="dyn['css']"/>
+            <div class="dyn-band" t-attf-style="max-height: {{dyn['footer']['height']}}mm; overflow: hidden;">
+                <t t-if="dyn['footer']['show']" t-out="0"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- ===== shared: article ===== -->
+    <template id="dyn_article">
+        <div t-attf-class="article o_report_layout_standard o_dyn_article {{dyn['style']['scope']}}"
+             t-att-dir="dyn['direction']"
+             t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <style t-out="dyn['css']"/>
+            <t t-if="dyn.get('body_mode') != 'dynamic'" t-call="web.address_layout"/>
+            <t t-out="0"/>
+        </div>
+    </template>
+
+    <!-- ================================================================== -->
+    <!-- 1. Modern: primary top band, accent underline, hairline footer       -->
+    <!-- ================================================================== -->
+    <template id="external_layout_dyn_modern">
+        <t t-if="not dyn or not dyn.get('style')" t-set="dyn"
+           t-value="(o or company).env['pdf.design.engine']._dyn_context(o or None, company=company)"/>
+        <t t-set="dyn_variant" t-value="'modern'"/>
+        <t t-set="dyn_on_primary" t-value="False"/>
+        <t t-call="pdf_report_dynamic_design.dyn_header_wrapper">
+            <div class="dyn-primary-bg" style="height: 4px; margin-bottom: 6px;"/>
+            <t t-call="pdf_report_dynamic_design.dyn_header_content"/>
+            <div class="dyn-bar" style="margin-bottom: 0;"/>
+        </t>
+        <t t-call="pdf_report_dynamic_design.dyn_article"><t t-out="0"/></t>
+        <t t-call="pdf_report_dynamic_design.dyn_footer_wrapper">
+            <div class="dyn-rule" style="padding-top: 4px;">
+                <t t-call="pdf_report_dynamic_design.dyn_footer_content"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- ================================================================== -->
+    <!-- 2. Minimal: white, hairlines, muted details                         -->
+    <!-- ================================================================== -->
+    <template id="external_layout_dyn_minimal">
+        <t t-if="not dyn or not dyn.get('style')" t-set="dyn"
+           t-value="(o or company).env['pdf.design.engine']._dyn_context(o or None, company=company)"/>
+        <t t-set="dyn_variant" t-value="'minimal'"/>
+        <t t-set="dyn_on_primary" t-value="False"/>
+        <t t-call="pdf_report_dynamic_design.dyn_header_wrapper">
+            <t t-call="pdf_report_dynamic_design.dyn_header_content"/>
+            <div class="dyn-rule" style="margin-top: 4px;"/>
+        </t>
+        <t t-call="pdf_report_dynamic_design.dyn_article"><t t-out="0"/></t>
+        <t t-call="pdf_report_dynamic_design.dyn_footer_wrapper">
+            <div class="dyn-rule dyn-muted" style="padding-top: 3px;">
+                <t t-call="pdf_report_dynamic_design.dyn_footer_content"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- ================================================================== -->
+    <!-- 3. Corporate: solid primary header and footer bands                 -->
+    <!-- ================================================================== -->
+    <template id="external_layout_dyn_corporate">
+        <t t-if="not dyn or not dyn.get('style')" t-set="dyn"
+           t-value="(o or company).env['pdf.design.engine']._dyn_context(o or None, company=company)"/>
+        <t t-set="dyn_variant" t-value="'corporate'"/>
+        <t t-set="dyn_on_primary" t-value="True"/>
+        <t t-call="pdf_report_dynamic_design.dyn_header_wrapper">
+            <div class="dyn-primary-bg" style="padding: 3mm 4mm; border-radius: 4px;">
+                <t t-call="pdf_report_dynamic_design.dyn_header_content"/>
+            </div>
+            <div class="dyn-bar" style="margin: 0;"/>
+        </t>
+        <t t-call="pdf_report_dynamic_design.dyn_article"><t t-out="0"/></t>
+        <t t-call="pdf_report_dynamic_design.dyn_footer_wrapper">
+            <div class="dyn-primary-bg" style="padding: 1.5mm 4mm; border-radius: 3px;">
+                <t t-call="pdf_report_dynamic_design.dyn_footer_content"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- ================================================================== -->
+    <!-- 4. Elegant: centered identity, double accent rule                   -->
+    <!-- ================================================================== -->
+    <template id="external_layout_dyn_elegant">
+        <t t-if="not dyn or not dyn.get('style')" t-set="dyn"
+           t-value="(o or company).env['pdf.design.engine']._dyn_context(o or None, company=company)"/>
+        <t t-set="dyn_variant" t-value="'elegant'"/>
+        <t t-set="dyn_on_primary" t-value="False"/>
+        <t t-call="pdf_report_dynamic_design.dyn_header_wrapper">
+            <t t-call="pdf_report_dynamic_design.dyn_header_content"/>
+            <div class="dyn-accent-border" style="border-top: 1px solid; border-bottom: 1px solid; height: 2px; margin-top: 4px;"/>
+        </t>
+        <t t-call="pdf_report_dynamic_design.dyn_article"><t t-out="0"/></t>
+        <t t-call="pdf_report_dynamic_design.dyn_footer_wrapper">
+            <div class="dyn-accent-border dyn-muted" style="border-top: 1px solid; padding-top: 3px;">
+                <t t-call="pdf_report_dynamic_design.dyn_footer_content"/>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <!-- Editable field list, shared by the three tabs -->
+    <record id="view_pdf_design_field_tree" model="ir.ui.view">
+        <field name="name">pdf.design.field.tree</field>
+        <field name="model">pdf.design.field</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="section" invisible="1"/>
+                <field name="target_model" invisible="1"/>
+                <field name="field_id" domain="[('model', '=', target_model), ('ttype', 'in', ['char', 'text', 'html', 'integer', 'float', 'monetary', 'date', 'datetime', 'boolean', 'selection', 'many2one', 'many2many']), ('name', 'not in', ['id', 'create_uid', 'write_uid', 'create_date', 'write_date', '__last_update', 'display_name', 'message_ids', 'message_follower_ids', 'activity_ids', 'website_message_ids', 'access_token', 'access_url', 'message_main_attachment_id'])]" options="{'no_create': True, 'no_open': True}"/>
+                <field name="field_name" optional="show"/>
+                <field name="field_type" optional="show"/>
+                <field name="label" placeholder="Same as field"/>
+                <field name="align" optional="show"/>
+                <field name="show_if_empty" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pdf_design_profile_tree" model="ir.ui.view">
+        <field name="name">pdf.design.profile.tree</field>
+        <field name="model">pdf.design.profile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="document_type"/>
+                <field name="report_layout_id"/>
+                <field name="body_mode"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pdf_design_profile_search" model="ir.ui.view">
+        <field name="name">pdf.design.profile.search</field>
+        <field name="model">pdf.design.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="document_type"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_doc" string="Document Type" context="{'group_by': 'document_type'}"/>
+                    <filter name="group_company" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_pdf_design_profile_form" model="ir.ui.view">
+        <field name="name">pdf.design.profile.form</field>
+        <field name="model">pdf.design.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_preview" type="object" string="Preview PDF" class="oe_highlight" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <button name="action_load_default_fields" type="object" string="Reset Fields to Defaults" confirm="This replaces all selected fields with the defaults. Continue?" attrs="{'invisible': [('id', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Quotation - Arabic"/></h1>
+                    </div>
+                    <group>
+                        <group string="Document">
+                            <field name="document_type" attrs="{'readonly': [('id', '!=', False)]}"/>
+                            <field name="model_name"/>
+                            <field name="line_model_name" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="company_id" invisible="1" groups="!base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                            <field name="title" placeholder="Default title"/>
+                        </group>
+                        <group string="Design">
+                            <field name="report_layout_id" placeholder="Company layout" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="body_mode" widget="radio"/>
+                            <field name="table_style" widget="selection_badge"/>
+                            <field name="density"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="header_fields" string="Header Fields">
+                            <p class="text-muted">
+                                Information panels printed above the lines (dates, references, salesperson, custom fields...).
+                            </p>
+                            <field name="header_field_ids" context="{'default_section': 'header'}">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section" invisible="1"/>
+                                    <field name="field_id" domain="[('model', '=', parent.model_name), ('ttype', 'in', ['char', 'text', 'html', 'integer', 'float', 'monetary', 'date', 'datetime', 'boolean', 'selection', 'many2one', 'many2many']), ('name', 'not in', ['id', 'create_uid', 'write_uid', 'create_date', 'write_date', '__last_update', 'display_name', 'message_ids', 'message_follower_ids', 'activity_ids', 'website_message_ids', 'access_token', 'access_url', 'message_main_attachment_id'])]" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="field_name" optional="show"/>
+                                    <field name="field_type" optional="show"/>
+                                    <field name="label" placeholder="Same as field"/>
+                                    <field name="show_if_empty" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="line_fields" string="Line Columns">
+                            <p class="text-muted">
+                                Columns of the lines table, in order. Custom line fields (x_...) are listed too.
+                            </p>
+                            <field name="line_field_ids" context="{'default_section': 'line'}">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section" invisible="1"/>
+                                    <field name="field_id" domain="[('model', '=', parent.line_model_name), ('ttype', 'in', ['char', 'text', 'html', 'integer', 'float', 'monetary', 'date', 'datetime', 'boolean', 'selection', 'many2one', 'many2many']), ('name', 'not in', ['id', 'create_uid', 'write_uid', 'create_date', 'write_date', '__last_update', 'display_name', 'message_ids', 'message_follower_ids', 'activity_ids', 'website_message_ids', 'access_token', 'access_url', 'message_main_attachment_id'])]" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="field_name" optional="show"/>
+                                    <field name="field_type" optional="show"/>
+                                    <field name="label" placeholder="Same as field"/>
+                                    <field name="align" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="summary_fields" string="Summary Fields">
+                            <p class="text-muted">
+                                Printed after the lines, next to the totals.
+                            </p>
+                            <field name="summary_field_ids" context="{'default_section': 'summary'}">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section" invisible="1"/>
+                                    <field name="field_id" domain="[('model', '=', parent.model_name), ('ttype', 'in', ['char', 'text', 'html', 'integer', 'float', 'monetary', 'date', 'datetime', 'boolean', 'selection', 'many2one', 'many2many']), ('name', 'not in', ['id', 'create_uid', 'write_uid', 'create_date', 'write_date', '__last_update', 'display_name', 'message_ids', 'message_follower_ids', 'activity_ids', 'website_message_ids', 'access_token', 'access_url', 'message_main_attachment_id'])]" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="field_name" optional="show"/>
+                                    <field name="field_type" optional="show"/>
+                                    <field name="label" placeholder="Same as field"/>
+                                    <field name="show_if_empty" optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="blocks" string="Blocks">
+                            <group>
+                                <group string="Body Blocks">
+                                    <field name="show_partner_block"/>
+                                    <field name="show_totals"/>
+                                    <field name="show_notes"/>
+                                    <field name="show_signature"/>
+                                </group>
+                                <group string="Colors">
+                                    <field name="color_mode" widget="radio"/>
+                                    <field name="palette" attrs="{'invisible': [('color_mode', '=', 'company')]}"/>
+                                    <field name="primary_color" widget="color" attrs="{'invisible': [('color_mode', '=', 'company')]}"/>
+                                    <field name="accent_color" widget="color" attrs="{'invisible': [('color_mode', '=', 'company')]}"/>
+                                    <field name="surface_color" widget="color" attrs="{'invisible': [('color_mode', '=', 'company')]}"/>
+                                    <field name="border_color" widget="color" attrs="{'invisible': [('color_mode', '=', 'company')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="header_footer" string="Header &amp; Footer">
+                            <p class="text-muted">Applies to the Dynamic layouts. Page margins are computed from the heights, so the header and footer never overlap the body.</p>
+                            <group>
+                                <group string="Header">
+                                    <field name="header_mode" widget="radio"/>
+                                    <field name="show_header" attrs="{'invisible': [('header_mode', '=', 'company')]}"/>
+                                    <field name="header_show_logo" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                    <field name="header_show_details" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                    <field name="header_show_tagline" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                    <field name="header_align" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                    <field name="header_height" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                    <field name="header_spacing" attrs="{'invisible': ['|', ('header_mode', '=', 'company'), ('show_header', '=', False)]}"/>
+                                </group>
+                                <group string="Footer">
+                                    <field name="footer_mode" widget="radio"/>
+                                    <field name="show_footer" attrs="{'invisible': [('footer_mode', '=', 'company')]}"/>
+                                    <field name="footer_show_page_number" attrs="{'invisible': ['|', ('footer_mode', '=', 'company'), ('show_footer', '=', False)]}"/>
+                                    <field name="footer_show_details" attrs="{'invisible': ['|', ('footer_mode', '=', 'company'), ('show_footer', '=', False)]}"/>
+                                    <field name="footer_text" attrs="{'invisible': ['|', ('footer_mode', '=', 'company'), ('show_footer', '=', False)]}"/>
+                                    <field name="footer_height" attrs="{'invisible': ['|', ('footer_mode', '=', 'company'), ('show_footer', '=', False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pdf_design_profile" model="ir.actions.act_window">
+        <field name="name">PDF Document Designs</field>
+        <field name="res_model">pdf.design.profile</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_pdf_design_profile_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a design for a document type</p>
+            <p>Pick a layout, colors and the fields to print on quotations, orders, RFQs, purchase orders, transfers, invoices and journal entries. Documents without a design keep using the company document layout.</p>
+        </field>
+    </record>
+</odoo>

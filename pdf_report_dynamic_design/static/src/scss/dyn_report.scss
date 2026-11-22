@@ -1,0 +1,26 @@
+// Bundled multi-script fallback (DejaVu Sans: Latin, Arabic, Hebrew, Cyrillic, Greek).
+// Always last in the font stack, so missing glyphs never render as empty boxes.
+@font-face {
+    font-family: 'DynFallback';
+    font-weight: normal;
+    font-style: normal;
+    src: url('/pdf_report_dynamic_design/static/fonts/DejaVuSans.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'DynFallback';
+    font-weight: bold;
+    font-style: normal;
+    src: url('/pdf_report_dynamic_design/static/fonts/DejaVuSans-Bold.ttf') format('truetype');
+}
+
+.o_dyn_article, .o_dyn_header, .o_dyn_footer, .o_dyn_extra, .o_dyn_page {
+    // Arabic joins letters: never let letter-spacing / hyphenation break words.
+    &[dir="rtl"] {
+        letter-spacing: 0 !important;
+        unicode-bidi: embed;
+        .dyn-title { letter-spacing: 0 !important; }
+    }
+    table { page-break-inside: auto; }
+    img { border: 0; }
+    p { margin: 0 0 4px 0; }
+}

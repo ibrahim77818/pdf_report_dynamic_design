@@ -1,0 +1,1394 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pdf_report_dynamic_design
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 16:48+0000\n"
+"PO-Revision-Date: 2026-11-21 16:48+0000\n"
+"Last-Translator: Ibrahim Yahia\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be a hexadecimal color such as #1F6FEB (current value: %(value)s)."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be between %(min)s and %(max)s mm (current value: %(value)s)."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#, python-format
+msgid "%(field)s must be between %(min)s and %(max)s pt (current value: %(value)s)."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__accent_color
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Accent Color"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Account"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__active
+msgid "Active"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Add Rules for Active Languages"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__align
+msgid "Align"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_align
+msgid "Alignment"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_align__end
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_header_align__end
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_header_align__end
+msgid "All at end"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_align__start
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_header_align__start
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_header_align__start
+msgid "All at start"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_font_rule_tree
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "All documents"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__field_ids
+msgid "All Fields"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__amiri
+msgid "Amiri (server font)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Amount Due"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_field__field_id
+msgid "Any stored or computed field of the document - custom fields (x_...) included."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Applies to the Dynamic layouts. Page margins are computed from the heights, so the header and footer never overlap the body."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_document_body
+msgid "Approved By"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_search
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Archived"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_auto_margins
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_auto_margins
+msgid "Auto Page Margins"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__align__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__direction__auto
+msgid "Automatic (from language)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_surface_color
+msgid "Background of table headers, totals and information panels."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_base_font_size
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_base_font_size
+msgid "Base Font Size (pt)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Blocks"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Body Blocks"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__body_mode
+msgid "Body Mode"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__bold
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__bold
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__bold
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__bold
+msgid "Bold"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__border_color
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_border_color
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_border_color
+msgid "Border Color"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__boxed
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__boxed
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__boxed
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__boxed
+msgid "Boxed"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__bubble
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__bubble
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__bubble
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__bubble
+msgid "Bubble"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__cairo
+msgid "Cairo (server font)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#, python-format
+msgid "Cancelled %s"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__align__center
+msgid "Center"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_align__center
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_header_align__center
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_header_align__center
+msgid "Centered"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__charcoal_orange
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__charcoal_orange
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__charcoal_orange
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__charcoal_orange
+msgid "Charcoal & Orange"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:v16work.action_pdf_design_font_rule
+msgid "Choose a PDF font for each language"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_border_color
+msgid "Color of table borders and separators."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_palette
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_palette
+msgid "Color Palette"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__color_mode
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Colors"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__column
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__column
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__column
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__column
+msgid "Column"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Columns of the lines table, in order. Custom line fields (x_...) are listed too."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__density__comfortable
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_density__comfortable
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_density__comfortable
+msgid "Comfortable"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__density__compact
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__compact
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__compact
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__compact
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_density__compact
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_density__compact
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__compact
+msgid "Compact"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__company_id
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__company_id
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_search
+msgid "Company"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__color_mode__company
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_mode__company
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__footer_mode__company
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__density__company
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__company
+msgid "Company Default"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_show_details
+msgid "Company Details"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__footer_show_details
+msgid "Company Footer Text"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Company layout"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_auto_margins
+msgid "Compute the top and bottom page margins from the header and footer heights (dynamic layouts only). Disable to keep the paper format margins."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Contact"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:v16work.action_pdf_design_profile
+msgid "Create a design for a document type"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Credit"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__crimson
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__crimson
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__crimson
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__crimson
+msgid "Crimson"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__custom
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__custom
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__custom
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__custom
+msgid "Custom"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__custom_font
+msgid "Custom Font Name"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__color_mode__custom
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_mode__custom
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__footer_mode__custom
+msgid "Custom for this Document"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__custom
+msgid "Custom server font"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Customer"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Date"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Debit"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Default title"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__dynfallback
+msgid "DejaVu Sans (bundled, multi-script)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Delivery Address"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Delivery Slip"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__density
+msgid "Density"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Description"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__desert
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__desert
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__desert
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__desert
+msgid "Desert Sand"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Design"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__direction
+msgid "Direction"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Document"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.ui.menu,name:v16work.menu_pdf_design_profile
+msgid "Document Designs"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__model_name
+msgid "Document Model"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_profile__title
+msgid "Document title. Leave empty for the default title."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__document_type
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_search
+msgid "Document Type"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#, python-format
+msgid "Draft %s"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__body_mode__dynamic
+msgid "Dynamic body (designed by this module)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_profile__body_mode
+msgid ""
+"Dynamic: the whole document body is rendered from the fields selected below.\n"
+"Standard: Odoo keeps its own body; the selected header/summary fields are added and line fields are printed in a \"Line Details\" table."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "E-invoice QR code (ZATCA)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "e.g. Quotation - Arabic"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__emerald
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__emerald
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__emerald
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__emerald
+msgid "Emerald"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__align__end
+msgid "End"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_font_rule__custom_font
+msgid "Exact family name of a font installed on the Odoo server."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_profile__footer_text
+msgid "Extra text printed in the footer of this document."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__field_id
+msgid "Field"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_field.py:0
+#, python-format
+msgid "Field \"%(field)s\" does not belong to %(model)s."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_field.py:0
+#, python-format
+msgid "Fields of type \"%s\" cannot be printed."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__font
+msgid "Font"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__font_size
+msgid "Font Size (pt)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_font_rule_ids
+#: model:ir.ui.menu,name:v16work.menu_pdf_design_font_rule
+#: model:ir.actions.act_window,name:v16work.action_pdf_design_font_rule
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Fonts per Language"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__footer_mode
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Footer"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_footer_height
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_footer_height
+msgid "Footer Height (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__footer_text
+msgid "Footer Text"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_footer_show_details
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_footer_show_details
+msgid "Footer: Footer Text"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_footer_show_page_number
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_footer_show_page_number
+msgid "Footer: Page Numbers"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_footer_thanks
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_footer_thanks
+msgid "Footer: Thank-you Line"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "From"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_header_spacing
+msgid "Gap between the header and the first line of the body."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__graphite
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__graphite
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__graphite
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__graphite
+msgid "Graphite"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_search
+msgid "Group By"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_mode
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Header"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Header & Footer"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_align
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_align
+msgid "Header Alignment"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_field_ids
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Header Fields"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_height
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_height
+msgid "Header Height (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__section__header
+msgid "Header Information"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_spacing
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_spacing
+msgid "Header Spacing (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_field__show_if_empty
+msgid "Header/summary only: print the label even if the value is empty."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_show_details
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_show_details
+msgid "Header: Company Details"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_show_logo
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_show_logo
+msgid "Header: Logo"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_header_show_tagline
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_header_show_tagline
+msgid "Header: Tagline"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_height
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__footer_height
+msgid "Height (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_footer_height
+msgid "Height reserved for the footer. The bottom page margin is computed from it."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_header_height
+msgid "Height reserved for the header. The top page margin is computed from it, so the header never overlaps the document body."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_report_layout__dyn_hidden
+msgid "Hidden in Layout Picker"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Information panels printed above the lines (dates, references, salesperson, custom fields...)."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Invoice"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__account_invoice
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__account_invoice
+msgid "Invoice / Bill"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Journal"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__journal_entry
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__journal_entry
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Journal Entry"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.actions.report,name:v16work.action_report_journal_entry
+msgid "Journal Entry (PDF)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_report_layout__dyn_hidden
+msgid "Kept for companies already using it, but not offered in Configure Document Layout."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__label
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Label"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__lang_id
+msgid "Language"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__lato
+msgid "Lato"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__report_layout_id
+#: model_terms:ir.ui.view,arch_db:v16work.view_base_document_layout_pdf_design
+msgid "Layout"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__auto
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__auto
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__auto
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__auto
+msgid "Layout Default"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_font_rule__font_size
+msgid "Leave 0 to use the company size."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_font_rule__document_type
+msgid "Leave empty to apply the rule to every document type."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_field__label
+msgid "Leave empty to use the field label."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_profile__report_layout_id
+msgid "Leave empty to use the layout chosen in \"Configure Document Layout\"."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__direction__ltr
+msgid "Left to Right"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__light
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__light
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__light
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__light
+msgid "Light"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__section__line
+msgid "Line Column"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__line_field_ids
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Line Columns"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_standard_bottom
+msgid "Line Details"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__line_model_name
+msgid "Line Model"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_show_line_numbers
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_show_line_numbers
+msgid "Line Numbers"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "Lines Table"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_show_logo
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_header_content
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_logo_block
+#: model_terms:ir.ui.view,arch_db:v16work.external_layout_dyn_v20_compact
+msgid "Logo"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__header_align__split
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_header_align__split
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_header_align__split
+msgid "Logo start / details end"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_table_style
+msgid "Look of the lines tables (dynamic body and Odoo's own report body). \"Layout Default\" lets the chosen layout decide."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__montserrat
+msgid "Montserrat"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__name
+msgid "Name"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__navy_cyan
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__navy_cyan
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__navy_cyan
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__navy_cyan
+msgid "Navy & Cyan"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__navy_teal
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__navy_teal
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__navy_teal
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__navy_teal
+msgid "Navy & Teal"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__navy_yellow
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__navy_yellow
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__navy_yellow
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__navy_yellow
+msgid "Navy & Yellow"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "No"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_notes
+msgid "Notes / Terms"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__noto_kufi_arabic
+msgid "Noto Kufi Arabic (server font)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__noto_naskh_arabic
+msgid "Noto Naskh Arabic (server font)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__ocean
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__ocean
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__ocean
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__ocean
+msgid "Ocean"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__document_type
+msgid "Only for Document"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_profile.py:0
+#, python-format
+msgid "Only one active design per company and document type is allowed (%s). Archive the other design first."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_font_rule.py:0
+msgid "Only one font rule per company, language and document type is allowed."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__open_sans
+msgid "Open Sans"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__oswald
+msgid "Oswald"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_footer_content
+#: model_terms:ir.ui.view,arch_db:v16work.external_layout_dyn_teal
+msgid "Page"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__footer_show_page_number
+msgid "Page Numbers"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__palette
+msgid "Palette"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Partner"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_partner_block
+msgid "Partner Address"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_document_body
+msgid "Payment Communication:"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_company_form_pdf_design
+msgid "PDF Design"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:v16work.model_pdf_design_field
+msgid "PDF Design Field"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.ui.menu,name:v16work.menu_pdf_design_root
+msgid "PDF Designs"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:v16work.model_pdf_design_profile
+msgid "PDF Document Design"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.actions.act_window,name:v16work.action_pdf_design_profile
+msgid "PDF Document Designs"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:v16work.model_pdf_design_engine
+msgid "PDF Dynamic Design Engine"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model,name:v16work.model_pdf_design_font_rule
+msgid "PDF Font per Language"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:v16work.action_pdf_design_profile
+msgid "Pick a layout, colors and the fields to print on quotations, orders, RFQs, purchase orders, transfers, invoices and journal entries. Documents without a design keep using the company document layout."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_palette
+msgid "Pick a preset to fill the primary, accent, surface and border colors."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_font_rule.py:0
+msgid "Please enter the custom font name."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_document_body
+msgid "Prepared By"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Preview PDF"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__primary_color
+msgid "Primary Color"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_res_company__dyn_footer_thanks
+msgid "Print \"Thank you for your business!\" in the designs that have one."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Printed after the lines, next to the totals."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__profile_id
+msgid "Profile"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__purchase_order
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Quotation"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__raleway
+msgid "Raleway"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Receipt"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.dyn_document_body
+msgid "Received By"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Reference"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__purchase_rfq
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__purchase_rfq
+msgid "Request for Quotation"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Reset Fields to Defaults"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__direction__rtl
+msgid "Right to Left"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__roboto
+msgid "Roboto"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__royal
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__royal
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__royal
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__royal
+msgid "Royal"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__sale_order
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__sale_quotation
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__sale_quotation
+msgid "Sales Quotation"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_field_tree
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Same as field"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Scan me with your banking app."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__section
+msgid "Section"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__sequence
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_font_rule__sequence
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_footer
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_show_footer
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_show_footer
+msgid "Show Footer"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_header
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_show_header
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_show_header
+msgid "Show Header"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__show_if_empty
+msgid "Show When Empty"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_signature
+msgid "Signature Boxes"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__slate_green
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__slate_green
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__slate_green
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__slate_green
+msgid "Slate & Green"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_spacing
+msgid "Spacing (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__density__spacious
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_density__spacious
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_density__spacious
+msgid "Spacious"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__body_mode__standard
+msgid "Standard Odoo body + selected fields"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__align__start
+msgid "Start"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__table_style__striped
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_table_style__striped
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_table_style__striped
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_table_style__striped
+msgid "Striped"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_zebra
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_zebra
+msgid "Striped Lines"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_report_layout__dyn_footer_height
+msgid "Suggested Footer Height (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_report_layout__dyn_header_height
+msgid "Suggested Header Height (mm)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_report_layout__dyn_palette
+msgid "Suggested Palette"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_report_layout__dyn_table_style
+msgid "Suggested Tables"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_field__section__summary
+msgid "Summary"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__summary_field_ids
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "Summary Fields"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__sunset
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__sunset
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__sunset
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__sunset
+msgid "Sunset"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__surface_color
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_surface_color
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_surface_color
+msgid "Surface Color"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_density
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_density
+msgid "Table Density"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__table_style
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_table_style
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_table_style
+#: model_terms:ir.ui.view,arch_db:v16work.view_base_document_layout_pdf_design
+msgid "Tables"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__header_show_tagline
+msgid "Tagline"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__font__tajawal
+msgid "Tajawal (Arabic)"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__target_model
+msgid "Target Model"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Tax ID"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Taxes"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__palette__teal
+#: model:ir.model.fields.selection,name:v16work.selection__report_layout__dyn_palette__teal
+#: model:ir.model.fields.selection,name:v16work.selection__res_company__dyn_palette__teal
+#: model:ir.model.fields.selection,name:v16work.selection__base_document_layout__dyn_palette__teal
+msgid "Teal"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__field_name
+msgid "Technical Name"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,help:v16work.field_pdf_design_field__target_model
+msgid "Technical: model whose fields can be picked for this section."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_base_document_layout_pdf_design
+msgid "Text"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_res_company__dyn_text_color
+#: model:ir.model.fields,field_description:v16work.field_base_document_layout__dyn_text_color
+msgid "Text Color"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.external_layout_dyn_teal
+#: model_terms:ir.ui.view,arch_db:v16work.external_layout_dyn_wave
+msgid "Thank you for your business!"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_profile.py:0
+msgid "There is no document of this type to preview yet."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.ui.view,arch_db:v16work.view_pdf_design_profile_form
+msgid "This replaces all selected fields with the defaults. Continue?"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__title
+msgid "Title"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+#: model_terms:ir.ui.view,arch_db:v16work.report_journal_entry_document
+msgid "Total"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Total Credit"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Total Debit"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_profile__show_totals
+msgid "Totals"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Transfer"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_font_rule__document_type__stock_picking
+#: model:ir.model.fields.selection,name:v16work.selection__pdf_design_profile__document_type__stock_picking
+msgid "Transfer / Delivery Slip"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model:ir.model.fields,field_description:v16work.field_pdf_design_field__field_type
+msgid "Type"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Untaxed Amount"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Vendor"
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: model_terms:ir.actions.act_window,help:v16work.action_pdf_design_font_rule
+msgid "Without a rule, right-to-left languages such as Arabic use Tajawal and the others use the company font. A bundled multi-script font is always added as a fallback so no character is ever printed as an empty box."
+msgstr ""
+
+#. module: pdf_report_dynamic_design
+#: code:addons/v16work/models/pdf_design_engine.py:0
+msgid "Yes"
+msgstr ""

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_pdf_design" model="ir.ui.view">
+        <field name="name">res.company.form.pdf.design</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="pdf_design" string="PDF Design" groups="base.group_system">
+                    <group>
+                        <group string="Colors">
+                            <field name="dyn_palette"/>
+                            <field name="primary_color" widget="color"/>
+                            <field name="secondary_color" widget="color" string="Accent Color"/>
+                            <field name="dyn_surface_color" widget="color"/>
+                            <field name="dyn_border_color" widget="color"/>
+                            <field name="dyn_text_color" widget="color"/>
+                        </group>
+                        <group string="Lines Table">
+                            <field name="dyn_table_style"/>
+                            <field name="dyn_density"/>
+                            <field name="dyn_zebra"/>
+                            <field name="dyn_show_line_numbers"/>
+                            <field name="dyn_base_font_size"/>
+                        </group>
+                        <group string="Header">
+                            <field name="dyn_show_header"/>
+                            <field name="dyn_header_show_logo" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                            <field name="dyn_header_show_details" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                            <field name="dyn_header_show_tagline" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                            <field name="dyn_header_align" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                            <field name="dyn_header_height" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                            <field name="dyn_header_spacing" attrs="{'invisible': [('dyn_show_header', '=', False)]}"/>
+                        </group>
+                        <group string="Footer">
+                            <field name="dyn_show_footer"/>
+                            <field name="dyn_footer_show_page_number" attrs="{'invisible': [('dyn_show_footer', '=', False)]}"/>
+                            <field name="dyn_footer_show_details" attrs="{'invisible': [('dyn_show_footer', '=', False)]}"/>
+                            <field name="dyn_footer_height" attrs="{'invisible': [('dyn_show_footer', '=', False)]}"/>
+                            <field name="dyn_footer_thanks" attrs="{'invisible': [('dyn_show_footer', '=', False)]}"/>
+                            <field name="dyn_auto_margins"/>
+                        </group>
+                    </group>
+                    <separator string="Fonts per Language"/>
+                    <button name="action_dyn_generate_font_rules" type="object" class="btn-secondary mb-2"
+                            string="Add Rules for Active Languages"/>
+                    <field name="dyn_font_rule_ids" context="{'default_company_id': id}">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="lang_id" options="{'no_create': True}"/>
+                            <field name="document_type" placeholder="All documents"/>
+                            <field name="font"/>
+                            <field name="custom_font" attrs="{'required': [('font', '=', 'custom')], 'readonly': [('font', '!=', 'custom')]}"/>
+                            <field name="direction"/>
+                            <field name="font_size"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
